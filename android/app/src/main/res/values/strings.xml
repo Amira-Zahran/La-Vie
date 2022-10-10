@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">lavie</string>
+    <string name="facebook_app_id">488648703143394</string>
+    <string name="fb_login_protocol_scheme">fb488648703143394</string>
+    <string name="facebook_client_token">f283e001c4dafd66b908a2dc52b0d9d0</string>
+</resources>
