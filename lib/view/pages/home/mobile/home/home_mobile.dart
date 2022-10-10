@@ -36,1234 +36,1242 @@ class _HomeMobileState extends State<HomeMobile> {
   int quantity = 1;
 
 
+fetch(){
+  HomeCubit.get(context).getProducts();
+  HomeCubit.get(context).getPlants();
+  HomeCubit.get(context).getSeeds();
+  HomeCubit.get(context).getTools();
+}
 
+@override
+  void initState() {
+    super.initState();
+    fetch();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (BuildContext context) {return HomeCubit()..getProducts(); },
-        child: BlocConsumer<HomeCubit, CubitStates>(
-          listener: (BuildContext context, state) { },
-          builder: (context, state) {
-            HomeCubit myHome = HomeCubit.get(context);
+    return BlocConsumer<HomeCubit, CubitStates>(
+      listener: (BuildContext context, state) { },
+      builder: (context, state) {
+        HomeCubit myHome = HomeCubit.get(context);
 //            ForumsCubit myForums = ForumsCubit.get(context);
-            //var products = Products as List<Map>;
-            return  SafeArea(
-                child: Scaffold(
-              backgroundColor: Colors.white,
-              /*drawer:myForums.profileModel == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Container(
-                width: MediaQuery.of(context).size.width * 0.66,
-                color: Colors.grey,
-                child: Drawer(
-                  elevation: 10,
-                  child: SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage: NetworkImage(
-                              myForums.profileModel!.data.imageUrl,
-                            ),
-                            backgroundColor: primary,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            '${myForums.profileModel!.data.firstName} ${myForums.profileModel!.data.lastName}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 20),
-                            color: Colors.grey.shade200,
-                            width: double.infinity,
-                            child: const ListTile(
-                              horizontalTitleGap: 0,
-                              title: Text(
-                                'Explore',
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              leading: Icon(
-                                Icons.explore,
-                                color: primary,
-                              ),
-                              contentPadding: EdgeInsets.all(10),
-                              dense: true,
-                              textColor: Colors.black54,
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                            child: InkWell(
-                              onTap: () {
-                                navigateTo(context, const Forums());
-                              },
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.people,
-                                    color: primary,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Community',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: InkWell(
-                              onTap: () {},
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.policy,
-                                    color: primary,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Terms and policy',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: InkWell(
-                              onTap: () {
-                                //signOut(context);
-                              },
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.logout,
-                                    color: primary,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Log Out',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+        //var products = Products as List<Map>;
+        return  SafeArea(
+            child: Scaffold(
+          backgroundColor: Colors.white,
+          /*drawer:myForums.profileModel == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Container(
+            width: MediaQuery.of(context).size.width * 0.66,
+            color: Colors.grey,
+            child: Drawer(
+              elevation: 10,
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(
+                          myForums.profileModel!.data.imageUrl,
+                        ),
+                        backgroundColor: primary,
                       ),
-                    ),
-                  ),
-                ),
-              ),
-*/
-              body: Column(
-                children: [
-                  InkWell(
-                    onTap: (){
-                      navigateAndFinish(context, const QuizQuestions());
-                    },
-                    child: Visibility( // show or hide widget
-                    //visible: (dateFormat == 'Monday') ? true : false,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20, left: MediaQuery.of(context).size.width *.8),
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(color: primary,borderRadius: BorderRadius.circular(30)),
-                      child: const Icon(
-                          Icons.question_mark,
-                          color: Colors.white,
-                          size: 20,
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        '${myForums.profileModel!.data.firstName} ${myForums.profileModel!.data.lastName}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 25,),
-                  Image.asset('assets/logo.png', width: 102, height: 23,),
-                  const SizedBox(height: 25,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
                       Container(
-                        width: 300, height: 45,
-                        decoration: BoxDecoration(color: lightGrey,borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                          child: TextField(
-                            //controller: myHome.searchController,
-                            onChanged: (v){
-                              setState(() {
-                                navigateTo(context, const Search());
-                              });},
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.search,color: darkGreyColor),
-                              hintStyle: TextStyle(color: lightBlack,
-                                fontFamily: "Cairo_Regular",
-                                fontWeight: FontWeight.bold,
-                              ),
-                              hintText: 'Search',
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        color: Colors.grey.shade200,
+                        width: double.infinity,
+                        child: const ListTile(
+                          horizontalTitleGap: 0,
+                          title: Text(
+                            'Explore',
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
                             ),
-                            textAlignVertical: TextAlignVertical.center,
                           ),
-                    ),
-                  ),
-                      GestureDetector(
-                        onTap: (){
-                          navigateTo(context, const Cart());
-                        },
-                        child: Container(
-                          height: 45,
-                          width: 45,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: primary,
-                              borderRadius: BorderRadius.circular(10)
+                          leading: Icon(
+                            Icons.explore,
+                            color: primary,
                           ),
-                          child: const Icon(Icons.shopping_cart_outlined,
-                            size: 20,
-                            color: Colors.white,
+                          contentPadding: EdgeInsets.all(10),
+                          dense: true,
+                          textColor: Colors.black54,
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10),
+                        child: InkWell(
+                          onTap: () {
+                            navigateTo(context, const Forums());
+                          },
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.people,
+                                color: primary,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Community',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: InkWell(
+                          onTap: () {},
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.policy,
+                                color: primary,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Terms and policy',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: InkWell(
+                          onTap: () {
+                            //signOut(context);
+                          },
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.logout,
+                                color: primary,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Log Out',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 25,),
-                  SingleChildScrollView(
-                  controller: _scrollbar,
-                  child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: 63,
-                      height: 35,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: (activeButton == 0 /*e.id*/ ? lightBlack : primary), backgroundColor: (activeButton == 0 ? Colors.white : lightGrey),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            side: BorderSide(
-                              color: (activeButton == 0 ? primary : lightGrey),
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        onPressed: ((){
-                          setState(() {
-                            activeButton = 0;
-                          });
-                        }),
-                        child: Text('All', style: TextStyle(color: (activeButton == 0 ? primary : darkGreyColor),fontWeight: FontWeight.bold,)),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 90,
-                      height: 35,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: (activeButton == 1 ? green
-                              : primary), backgroundColor: (activeButton == 1 ? Colors.white : lightGrey),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            side: BorderSide(
-                              color: (activeButton == 1 ? primary : lightGrey),
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        onPressed: ((){
-                          setState(() {
-                            activeButton = 1;
-                          });
-                        }),
-                        child: Text('Plants', style: TextStyle(color: (activeButton == 1 ? primary : darkGreyColor),fontWeight: FontWeight.bold,)),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 90,
-                      height: 35,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: (activeButton == 2 ? lightBlack : primary), backgroundColor: (activeButton == 2 ? Colors.white : lightGrey),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            side: BorderSide(
-                              color: (activeButton == 2 ? primary : lightGrey),
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        onPressed: ((){
-                          setState(() {
-                            activeButton = 2;
-                          });
-                        }),
-                        child: Text('Seeds', style: TextStyle(color: (activeButton == 2 ? primary
-                            : darkGreyColor),fontWeight: FontWeight.bold,)),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 90,
-                      height: 35,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: (activeButton == 3 ? lightBlack
-                              : primary), backgroundColor: (activeButton == 3 ? Colors.white : lightGrey),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            side: BorderSide(
-                              color: (activeButton == 3 ? primary : lightGrey),
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        onPressed: ((){
-                          setState(() {
-                            //widget.onFilterChanged!(e.id!);
-                            activeButton = 3;
-                          });
-                        }),
-                        child: Text('Tools', style: TextStyle(color: (activeButton == 3 ? primary
-                            : darkGreyColor),fontWeight: FontWeight.bold, )),
-                      ),
-                    ),
-                  ],),
+                ),
               ),
-                  const SizedBox(height: 30,),
-/*
-                   Expanded(
-                    child: GridView.count(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      physics: const BouncingScrollPhysics(),
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      crossAxisCount: 2,
-                      childAspectRatio: 1 / 1.9,
-                      children: List.generate(
-                        Products.AllProducts.length, (index) => AllProducts(Products.AllProducts[index] , this.context),
+            ),
+          ),
+*/
+          body: Column(
+            children: [
+              InkWell(
+                onTap: (){
+                  navigateAndFinish(context, const QuizQuestions());
+                },
+                child: Visibility( // show or hide widget
+                //visible: (dateFormat == 'Monday') ? true : false,
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, left: MediaQuery.of(context).size.width *.8),
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(color: primary,borderRadius: BorderRadius.circular(30)),
+                  child: const Icon(
+                      Icons.question_mark,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 25,),
+              Image.asset('assets/logo.png', width: 102, height: 23,),
+              const SizedBox(height: 25,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 300, height: 45,
+                    decoration: BoxDecoration(color: lightGrey,borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: TextField(
+                        //controller: myHome.searchController,
+                        onChanged: (v){
+                          setState(() {
+                            navigateTo(context, const Search());
+                          });},
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.search,color: darkGreyColor),
+                          hintStyle: TextStyle(color: lightBlack,
+                            fontFamily: "Cairo_Regular",
+                            fontWeight: FontWeight.bold,
+                          ),
+                          hintText: 'Search',
+                        ),
+                        textAlignVertical: TextAlignVertical.center,
+                      ),
+                ),
+              ),
+                  GestureDetector(
+                    onTap: (){
+                      navigateTo(context, const Cart());
+                    },
+                    child: Container(
+                      height: 45,
+                      width: 45,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Icon(Icons.shopping_cart_outlined,
+                        size: 20,
+                        color: Colors.white,
                       ),
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 25,),
+              SingleChildScrollView(
+              controller: _scrollbar,
+              child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 63,
+                  height: 35,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: (activeButton == 0 /*e.id*/ ? lightBlack : primary), backgroundColor: (activeButton == 0 ? Colors.white : lightGrey),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        side: BorderSide(
+                          color: (activeButton == 0 ? primary : lightGrey),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    onPressed: ((){
+                      setState(() {
+                        activeButton = 0;
+                      });
+                    }),
+                    child: Text('All', style: TextStyle(color: (activeButton == 0 ? primary : darkGreyColor),fontWeight: FontWeight.bold,)),
+                  ),
+                ),
+                SizedBox(
+                  width: 90,
+                  height: 35,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: (activeButton == 1 ? green
+                          : primary), backgroundColor: (activeButton == 1 ? Colors.white : lightGrey),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        side: BorderSide(
+                          color: (activeButton == 1 ? primary : lightGrey),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    onPressed: ((){
+                      setState(() {
+                        activeButton = 1;
+                      });
+                    }),
+                    child: Text('Plants', style: TextStyle(color: (activeButton == 1 ? primary : darkGreyColor),fontWeight: FontWeight.bold,)),
+                  ),
+                ),
+                SizedBox(
+                  width: 90,
+                  height: 35,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: (activeButton == 2 ? lightBlack : primary), backgroundColor: (activeButton == 2 ? Colors.white : lightGrey),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        side: BorderSide(
+                          color: (activeButton == 2 ? primary : lightGrey),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    onPressed: ((){
+                      setState(() {
+                        activeButton = 2;
+                      });
+                    }),
+                    child: Text('Seeds', style: TextStyle(color: (activeButton == 2 ? primary
+                        : darkGreyColor),fontWeight: FontWeight.bold,)),
+                  ),
+                ),
+                SizedBox(
+                  width: 90,
+                  height: 35,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: (activeButton == 3 ? lightBlack
+                          : primary), backgroundColor: (activeButton == 3 ? Colors.white : lightGrey),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        side: BorderSide(
+                          color: (activeButton == 3 ? primary : lightGrey),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    onPressed: ((){
+                      setState(() {
+                        //widget.onFilterChanged!(e.id!);
+                        activeButton = 3;
+                      });
+                    }),
+                    child: Text('Tools', style: TextStyle(color: (activeButton == 3 ? primary
+                        : darkGreyColor),fontWeight: FontWeight.bold, )),
+                  ),
+                ),
+              ],),
+          ),
+              const SizedBox(height: 30,),
+/*
+               Expanded(
+                child: GridView.count(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  physics: const BouncingScrollPhysics(),
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.9,
+                  children: List.generate(
+                    Products.AllProducts.length, (index) => AllProducts(Products.AllProducts[index] , this.context),
+                  ),
+                ),
+              ),
 */
 
-                 /* Expanded(
-                  child: myHome.productsModel == null ? const CircularProgressIndicator() : GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 1,
-                    crossAxisSpacing: 1,
-                    childAspectRatio: 0.55,
-                    children: List.generate(myHome.productsModel!.data!.length, (index) {
-                      if(activeButton == 0){
-                       buildGridProducts(allProducts: myHome.productsModel!.data![index]);
-                      } else if(activeButton == 1){
-                        getPlant(plantData: myHome.plantModel!.data![index]);
-                      }else if(activeButton == 2){
-                        getPlant(plantData: myHome.plantModel!.data![index]);
-                      }else if(activeButton == 3){
-                        getPlant(plantData: myHome.plantModel!.data![index]);
-                      }
+             /* Expanded(
+              child: myHome.productsModel == null ? const CircularProgressIndicator() : GridView.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: 1,
+                crossAxisSpacing: 1,
+                childAspectRatio: 0.55,
+                children: List.generate(myHome.productsModel!.data!.length, (index) {
+                  if(activeButton == 0){
+                   buildGridProducts(allProducts: myHome.productsModel!.data![index]);
+                  } else if(activeButton == 1){
+                    getPlant(plantData: myHome.plantModel!.data![index]);
+                  }else if(activeButton == 2){
+                    getPlant(plantData: myHome.plantModel!.data![index]);
+                  }else if(activeButton == 3){
+                    getPlant(plantData: myHome.plantModel!.data![index]);
+                  }
 
-                      return const Center(child: CircularProgressIndicator(color: primary,));
-                    }
-                    ),
-                  )
-              )*/
+                  return const Center(child: CircularProgressIndicator(color: primary,));
+                }
+                ),
+              )
+          )*/
 
-               /*   Expanded(child: GridView.count(
-                    crossAxisCount: 2,
-                    children:[
-                      Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            SizedBox(
-                              width: 800,
-                              height: 800.0,
-                              child: Container(),
-                            ),
-                            const Positioned(
-                                top: 20,
-                                left: 20,
-                                right: 20,
-                                bottom: 6,
-                                child: Card(elevation: 10,)),
-                            Positioned(
-                              top: 23,
-                              left: 20,
-                              right: 20,
-                              bottom: 0,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        spreadRadius: 2,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                            Positioned(
-                              top: 30,
-                              right: 30,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity != 1) {
-                                        quantity = quantity - 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                  const SizedBox(width: 5,),
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity >= 1) {
-                                        quantity = quantity + 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 10,
-                                      ),
-                                    ),
+           /*   Expanded(child: GridView.count(
+                crossAxisCount: 2,
+                children:[
+                  Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        SizedBox(
+                          width: 800,
+                          height: 800.0,
+                          child: Container(),
+                        ),
+                        const Positioned(
+                            top: 20,
+                            left: 20,
+                            right: 20,
+                            bottom: 6,
+                            child: Card(elevation: 10,)),
+                        Positioned(
+                          top: 23,
+                          left: 20,
+                          right: 20,
+                          bottom: 0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
-                              ),
-                            ),
-
-                            myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                              top: 100,
-                              left: 10,
-                              child: SizedBox(
-                                height: 85,
-                                width: 202,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: const TextStyle(color: Colors.white,),
-                                      children: [
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].name}\n',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].price!} EGP',
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              )),
+                        ),
+                        Positioned(
+                          top: 30,
+                          right: 30,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  if (quantity != 1) {
+                                    quantity = quantity - 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.remove,
+                                    size: 10,
                                   ),
                                 ),
                               ),
-                            ),
-
-
-                            Positioned(
-                              bottom: 5,
-                              left: 30,
-                              right: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 18.0),
-                                child: ElevatedButton(
-                                    onPressed: (){
-
-                                    },
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: primary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0))),
-                                    child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                              const SizedBox(width: 5,),
+                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
+                              const SizedBox(width: 5,),
+                              InkWell(
+                                onTap: (){
+                                  if (quantity >= 1) {
+                                    quantity = quantity + 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 10,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
+                          ),
+                        ),
 
-                            myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                              right: 50,
-                              bottom: 95,
-                              width: 150,
-                              height: 110,
-                              child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
-                              ),)
-
-                          ]),
-                      Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            SizedBox(
-                              width: 800,
-                              height: 800.0,
-                              child: Container(),
-                            ),
-                            const Positioned(
-                                top: 20,
-                                left: 20,
-                                right: 20,
-                                bottom: 6,
-                                child: Card(elevation: 10,)),
-                            Positioned(
-                              top: 23,
-                              left: 20,
-                              right: 20,
-                              bottom: 0,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        spreadRadius: 2,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                            Positioned(
-                              top: 30,
-                              right: 30,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity != 1) {
-                                        quantity = quantity - 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 10,
+                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
+                          top: 100,
+                          left: 10,
+                          child: SizedBox(
+                            height: 85,
+                            width: 202,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(color: Colors.white,),
+                                  children: [
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].name}\n',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 12
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                  const SizedBox(width: 5,),
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity >= 1) {
-                                        quantity = quantity + 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 10,
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].price!} EGP',
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Positioned(
-                            top: 100,
-                            left: 10,
-                            child: SizedBox(
-                              height: 85,
-                              width: 202,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(color: Colors.white,),
-                                    children: [
-                                      TextSpan(
-                                        text: '${myHome.productModel!.data![2].name}\n',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '${myHome.productModel!.data![2].price!} EGP',
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                            Positioned(
-                              bottom: 5,
-                              left: 30,
-                              right: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 18.0),
-                                child: ElevatedButton(
-                                    onPressed: (){
+                        ),
 
-                                    },
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: primary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0))),
-                                    child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+
+                        Positioned(
+                          bottom: 5,
+                          left: 30,
+                          right: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
+                            child: ElevatedButton(
+                                onPressed: (){
+
+                                },
+                                style: TextButton.styleFrom(
+                                    backgroundColor: primary,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0))),
+                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                          ),
+                        ),
+
+                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
+                          right: 50,
+                          bottom: 95,
+                          width: 150,
+                          height: 110,
+                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
+                          ),)
+
+                      ]),
+                  Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        SizedBox(
+                          width: 800,
+                          height: 800.0,
+                          child: Container(),
+                        ),
+                        const Positioned(
+                            top: 20,
+                            left: 20,
+                            right: 20,
+                            bottom: 6,
+                            child: Card(elevation: 10,)),
+                        Positioned(
+                          top: 23,
+                          left: 20,
+                          right: 20,
+                          bottom: 0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              )),
+                        ),
+                        Positioned(
+                          top: 30,
+                          right: 30,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  if (quantity != 1) {
+                                    quantity = quantity - 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.remove,
+                                    size: 10,
+                                  ),
+                                ),
                               ),
-                            ),
-                            Positioned(
-                            right: 50,
-                            bottom: 90,
-                            width: 150,
-                            height: 110,
-                            child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
-                            ),)
-                          ]),
-                      Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            SizedBox(
-                              width: 800,
-                              height: 800.0,
-                              child: Container(),
-                            ),
-                            const Positioned(
-                                top: 20,
-                                left: 20,
-                                right: 20,
-                                bottom: 6,
-                                child: Card(elevation: 10,)),
-                            Positioned(
-                              top: 23,
-                              left: 20,
-                              right: 20,
-                              bottom: 0,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        spreadRadius: 2,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                            Positioned(
-                              top: 30,
-                              right: 30,
-                              child: Row(
+                              const SizedBox(width: 5,),
+                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
+                              const SizedBox(width: 5,),
+                              InkWell(
+                                onTap: (){
+                                  if (quantity >= 1) {
+                                    quantity = quantity + 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                        top: 100,
+                        left: 10,
+                        child: SizedBox(
+                          height: 85,
+                          width: 202,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(color: Colors.white,),
                                 children: [
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity != 1) {
-                                        quantity = quantity - 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 10,
-                                      ),
+                                  TextSpan(
+                                    text: '${myHome.productModel!.data![2].name}\n',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 12
                                     ),
                                   ),
-                                  const SizedBox(width: 5,),
-                                  Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                  const SizedBox(width: 5,),
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity >= 1) {
-                                        quantity = quantity + 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 10,
-                                      ),
+                                  TextSpan(
+                                    text: '${myHome.productModel!.data![2].price!} EGP',
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+                          ),
+                        ),
+                      ),
+                        Positioned(
+                          bottom: 5,
+                          left: 30,
+                          right: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
+                            child: ElevatedButton(
+                                onPressed: (){
 
-                            myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                              top: 100,
-                              left: 10,
-                              child: SizedBox(
-                                height: 85,
-                                width: 202,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: const TextStyle(color: Colors.white,),
-                                      children: [
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].name}\n',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].price!} EGP',
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-
-                            Positioned(
-                              bottom: 5,
-                              left: 30,
-                              right: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 18.0),
-                                child: ElevatedButton(
-                                    onPressed: (){
-
-                                    },
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: primary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0))),
-                                    child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                              ),
-                            ),
-
-                            myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                              right: 50,
-                              bottom: 95,
-                              width: 150,
-                              height: 110,
-                              child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
-                              ),)
-
-                          ]),
-                      Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            SizedBox(
-                              width: 800,
-                              height: 800.0,
-                              child: Container(),
-                            ),
-                            const Positioned(
-                                top: 20,
-                                left: 20,
-                                right: 20,
-                                bottom: 6,
-                                child: Card(elevation: 10,)),
-                            Positioned(
-                              top: 23,
-                              left: 20,
-                              right: 20,
-                              bottom: 0,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        spreadRadius: 2,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                            Positioned(
-                              top: 30,
-                              right: 30,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity != 1) {
-                                        quantity = quantity - 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                  const SizedBox(width: 5,),
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity >= 1) {
-                                        quantity = quantity + 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 10,
-                                      ),
-                                    ),
+                                },
+                                style: TextButton.styleFrom(
+                                    backgroundColor: primary,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0))),
+                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                          ),
+                        ),
+                        Positioned(
+                        right: 50,
+                        bottom: 90,
+                        width: 150,
+                        height: 110,
+                        child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
+                        ),)
+                      ]),
+                  Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        SizedBox(
+                          width: 800,
+                          height: 800.0,
+                          child: Container(),
+                        ),
+                        const Positioned(
+                            top: 20,
+                            left: 20,
+                            right: 20,
+                            bottom: 6,
+                            child: Card(elevation: 10,)),
+                        Positioned(
+                          top: 23,
+                          left: 20,
+                          right: 20,
+                          bottom: 0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
-                              ),
-                            ),
-                            Positioned(
-                              top: 100,
-                              left: 10,
-                              child: SizedBox(
-                                height: 85,
-                                width: 202,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: const TextStyle(color: Colors.white,),
-                                      children: [
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].name}\n',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].price!} EGP',
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              )),
+                        ),
+                        Positioned(
+                          top: 30,
+                          right: 30,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  if (quantity != 1) {
+                                    quantity = quantity - 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.remove,
+                                    size: 10,
                                   ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              bottom: 5,
-                              left: 30,
-                              right: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 18.0),
-                                child: ElevatedButton(
-                                    onPressed: (){
+                              const SizedBox(width: 5,),
+                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
+                              const SizedBox(width: 5,),
+                              InkWell(
+                                onTap: (){
+                                  if (quantity >= 1) {
+                                    quantity = quantity + 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
 
-                                    },
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: primary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0))),
-                                    child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
+                          top: 100,
+                          left: 10,
+                          child: SizedBox(
+                            height: 85,
+                            width: 202,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(color: Colors.white,),
+                                  children: [
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].name}\n',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].price!} EGP',
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Positioned(
-                              right: 50,
-                              bottom: 90,
-                              width: 150,
-                              height: 110,
-                              child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
-                              ),)
-                          ]),
-                      Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            SizedBox(
-                              width: 800,
-                              height: 800.0,
-                              child: Container(),
-                            ),
-                            const Positioned(
-                                top: 20,
-                                left: 20,
-                                right: 20,
-                                bottom: 6,
-                                child: Card(elevation: 10,)),
-                            Positioned(
-                              top: 23,
-                              left: 20,
-                              right: 20,
-                              bottom: 0,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        spreadRadius: 2,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                            Positioned(
-                              top: 30,
-                              right: 30,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity != 1) {
-                                        quantity = quantity - 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                  const SizedBox(width: 5,),
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity >= 1) {
-                                        quantity = quantity + 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 10,
-                                      ),
-                                    ),
+                          ),
+                        ),
+
+
+                        Positioned(
+                          bottom: 5,
+                          left: 30,
+                          right: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
+                            child: ElevatedButton(
+                                onPressed: (){
+
+                                },
+                                style: TextButton.styleFrom(
+                                    backgroundColor: primary,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0))),
+                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                          ),
+                        ),
+
+                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
+                          right: 50,
+                          bottom: 95,
+                          width: 150,
+                          height: 110,
+                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
+                          ),)
+
+                      ]),
+                  Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        SizedBox(
+                          width: 800,
+                          height: 800.0,
+                          child: Container(),
+                        ),
+                        const Positioned(
+                            top: 20,
+                            left: 20,
+                            right: 20,
+                            bottom: 6,
+                            child: Card(elevation: 10,)),
+                        Positioned(
+                          top: 23,
+                          left: 20,
+                          right: 20,
+                          bottom: 0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
-                              ),
-                            ),
-
-                            myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                              top: 100,
-                              left: 10,
-                              child: SizedBox(
-                                height: 85,
-                                width: 202,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: const TextStyle(color: Colors.white,),
-                                      children: [
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].name}\n',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].price!} EGP',
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              )),
+                        ),
+                        Positioned(
+                          top: 30,
+                          right: 30,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  if (quantity != 1) {
+                                    quantity = quantity - 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.remove,
+                                    size: 10,
                                   ),
                                 ),
                               ),
-                            ),
-
-
-                            Positioned(
-                              bottom: 5,
-                              left: 30,
-                              right: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 18.0),
-                                child: ElevatedButton(
-                                    onPressed: (){
-
-                                    },
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: primary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0))),
-                                    child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                              const SizedBox(width: 5,),
+                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
+                              const SizedBox(width: 5,),
+                              InkWell(
+                                onTap: (){
+                                  if (quantity >= 1) {
+                                    quantity = quantity + 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: 100,
+                          left: 10,
+                          child: SizedBox(
+                            height: 85,
+                            width: 202,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(color: Colors.white,),
+                                  children: [
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].name}\n',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].price!} EGP',
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 5,
+                          left: 30,
+                          right: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
+                            child: ElevatedButton(
+                                onPressed: (){
 
-                            myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                              right: 50,
-                              bottom: 95,
-                              width: 150,
-                              height: 110,
-                              child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
-                              ),)
-
-                          ]),
-                      Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            SizedBox(
-                              width: 800,
-                              height: 800.0,
-                              child: Container(),
-                            ),
-                            const Positioned(
-                                top: 20,
-                                left: 20,
-                                right: 20,
-                                bottom: 6,
-                                child: Card(elevation: 10,)),
-                            Positioned(
-                              top: 23,
-                              left: 20,
-                              right: 20,
-                              bottom: 0,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        spreadRadius: 2,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                            Positioned(
-                              top: 30,
-                              right: 30,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity != 1) {
-                                        quantity = quantity - 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 10,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                  const SizedBox(width: 5,),
-                                  InkWell(
-                                    onTap: (){
-                                      if (quantity >= 1) {
-                                        quantity = quantity + 1;
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 16,
-                                      height: 16,
-                                      decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 10,
-                                      ),
-                                    ),
+                                },
+                                style: TextButton.styleFrom(
+                                    backgroundColor: primary,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0))),
+                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                          ),
+                        ),
+                        Positioned(
+                          right: 50,
+                          bottom: 90,
+                          width: 150,
+                          height: 110,
+                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
+                          ),)
+                      ]),
+                  Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        SizedBox(
+                          width: 800,
+                          height: 800.0,
+                          child: Container(),
+                        ),
+                        const Positioned(
+                            top: 20,
+                            left: 20,
+                            right: 20,
+                            bottom: 6,
+                            child: Card(elevation: 10,)),
+                        Positioned(
+                          top: 23,
+                          left: 20,
+                          right: 20,
+                          bottom: 0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
-                              ),
-                            ),
-                            Positioned(
-                              top: 100,
-                              left: 10,
-                              child: SizedBox(
-                                height: 85,
-                                width: 202,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: const TextStyle(color: Colors.white,),
-                                      children: [
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].name}\n',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '${myHome.productModel!.data![2].price!} EGP',
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              )),
+                        ),
+                        Positioned(
+                          top: 30,
+                          right: 30,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  if (quantity != 1) {
+                                    quantity = quantity - 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.remove,
+                                    size: 10,
                                   ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              bottom: 5,
-                              left: 30,
-                              right: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 18.0),
-                                child: ElevatedButton(
-                                    onPressed: (){
+                              const SizedBox(width: 5,),
+                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
+                              const SizedBox(width: 5,),
+                              InkWell(
+                                onTap: (){
+                                  if (quantity >= 1) {
+                                    quantity = quantity + 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
 
-                                    },
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: primary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0))),
-                                    child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
+                          top: 100,
+                          left: 10,
+                          child: SizedBox(
+                            height: 85,
+                            width: 202,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(color: Colors.white,),
+                                  children: [
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].name}\n',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].price!} EGP',
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Positioned(
-                              right: 50,
-                              bottom: 90,
-                              width: 150,
-                              height: 110,
-                              child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
-                              ),)
-                          ]),
+                          ),
+                        ),
 
-                  ])),*/
-                  Expanded(
-                      child: activeButton == 0
-                          ? buildGridProduct(myHome.productModel)
-                          : activeButton == 1
-                               ? buildGridPlant(myHome.plantModel)
-                               : activeButton == 2
-                                    ? buildGridSeed(myHome.seedModel)
-                                    : buildGridTool(myHome.toolModel)
-                  )
-                ],
-              ),
-            ));
-          })
-        );
+
+                        Positioned(
+                          bottom: 5,
+                          left: 30,
+                          right: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
+                            child: ElevatedButton(
+                                onPressed: (){
+
+                                },
+                                style: TextButton.styleFrom(
+                                    backgroundColor: primary,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0))),
+                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                          ),
+                        ),
+
+                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
+                          right: 50,
+                          bottom: 95,
+                          width: 150,
+                          height: 110,
+                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
+                          ),)
+
+                      ]),
+                  Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        SizedBox(
+                          width: 800,
+                          height: 800.0,
+                          child: Container(),
+                        ),
+                        const Positioned(
+                            top: 20,
+                            left: 20,
+                            right: 20,
+                            bottom: 6,
+                            child: Card(elevation: 10,)),
+                        Positioned(
+                          top: 23,
+                          left: 20,
+                          right: 20,
+                          bottom: 0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              )),
+                        ),
+                        Positioned(
+                          top: 30,
+                          right: 30,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  if (quantity != 1) {
+                                    quantity = quantity - 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.remove,
+                                    size: 10,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 5,),
+                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
+                              const SizedBox(width: 5,),
+                              InkWell(
+                                onTap: (){
+                                  if (quantity >= 1) {
+                                    quantity = quantity + 1;
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: 100,
+                          left: 10,
+                          child: SizedBox(
+                            height: 85,
+                            width: 202,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(color: Colors.white,),
+                                  children: [
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].name}\n',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '${myHome.productModel!.data![2].price!} EGP',
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 5,
+                          left: 30,
+                          right: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
+                            child: ElevatedButton(
+                                onPressed: (){
+
+                                },
+                                style: TextButton.styleFrom(
+                                    backgroundColor: primary,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0))),
+                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                          ),
+                        ),
+                        Positioned(
+                          right: 50,
+                          bottom: 90,
+                          width: 150,
+                          height: 110,
+                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
+                          ),)
+                      ]),
+
+              ])),*/
+              Expanded(
+                  child: activeButton == 0
+                      ? buildGridProduct(myHome.productModel)
+                      : activeButton == 1
+                           ? buildGridPlant(myHome.plantModel)
+                           : activeButton == 2
+                                ? buildGridSeed(myHome.seedModel)
+                                : buildGridTool(myHome.toolModel)
+              )
+            ],
+          ),
+        ));
+      });
   }
 
   Widget buildGridProduct(ProductModel? productModel){
