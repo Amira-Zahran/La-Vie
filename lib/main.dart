@@ -48,9 +48,9 @@ class MyApp extends StatelessWidget {
                 //textScaleFactor: .5,
               ),
               child: SplashScreenView(
-                navigateRoute: PreferenceUtils.getString(SharedKeys.apiToken).isEmpty
-                ? const AuthMobile()
-                : const NavigationBottomBar(),
+                navigateRoute: /*PreferenceUtils.getString(SharedKeys.apiToken).isEmpty
+                ? */const AuthMobile(),
+                //: const NavigationBottomBar(),
                 duration: 3000,
                 imageSize: 70,
                 imageSrc: 'assets/logo.png',
