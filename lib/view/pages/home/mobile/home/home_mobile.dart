@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lavie_web/view/components/home_mobile/home_component.dart';
 import 'package:lavie_web/view/components/styles/colors.dart';
 import 'package:lavie_web/view_model/cubit/home/home_cubit.dart';
 import 'package:lavie_web/view_model/cubit/states.dart';
@@ -26,7 +27,6 @@ class _HomeMobileState extends State<HomeMobile> {
 
   int activeButton = 0;
 
-  //model = Products;
 
   final _scrollbar = ScrollController();
 
@@ -55,8 +55,7 @@ fetch(){
       listener: (BuildContext context, state) { },
       builder: (context, state) {
         HomeCubit myHome = HomeCubit.get(context);
-//            ForumsCubit myForums = ForumsCubit.get(context);
-        //var products = Products as List<Map>;
+
         return  SafeArea(
             child: Scaffold(
           backgroundColor: Colors.white,
@@ -82,7 +81,7 @@ fetch(){
                 ),
               ),
               const SizedBox(height: 25,),
-              Image.asset('assets/logo.png', width: 102, height: 23,),
+              Image.asset('assets/logo.png', width: 130, height: 30,),
               const SizedBox(height: 25,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -132,987 +131,42 @@ fetch(){
               ),
               const SizedBox(height: 25,),
               SingleChildScrollView(
-              controller: _scrollbar,
-              child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 63,
-                  height: 35,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: (activeButton == 0 /*e.id*/ ? lightBlack : primary), backgroundColor: (activeButton == 0 ? Colors.white : lightGrey),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        side: BorderSide(
-                          color: (activeButton == 0 ? primary : lightGrey),
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    onPressed: ((){
-                      setState(() {
-                        activeButton = 0;
-                      });
-                    }),
-                    child: Text('All', style: TextStyle(color: (activeButton == 0 ? primary : darkGreyColor),fontWeight: FontWeight.bold,)),
+                controller: _scrollbar,
+                child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 90,
+                    height: 35,
+                    child: customBtn(forColor: (activeButton == 0 ? lightBlack : primary), backColor: (activeButton == 0 ? Colors.white : lightGrey), color: (activeButton == 0 ? primary : lightGrey), onPressed: ((){setState(() {activeButton = 0;});
+                    }), text: 'All', textColor: (activeButton == 0 ? primary : darkGreyColor),),
                   ),
-                ),
-                SizedBox(
-                  width: 90,
-                  height: 35,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: (activeButton == 1 ? green
-                          : primary), backgroundColor: (activeButton == 1 ? Colors.white : lightGrey),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        side: BorderSide(
-                          color: (activeButton == 1 ? primary : lightGrey),
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    onPressed: ((){
-                      setState(() {
-                        activeButton = 1;
-                      });
-                    }),
-                    child: Text('Plants', style: TextStyle(color: (activeButton == 1 ? primary : darkGreyColor),fontWeight: FontWeight.bold,)),
+
+                  SizedBox(
+                    width: 90,
+                    height: 35,
+                    child: customBtn(forColor: (activeButton == 1 ? lightBlack : primary), backColor: (activeButton == 1 ? Colors.white : lightGrey), color: (activeButton == 1 ? primary : lightGrey), onPressed: ((){
+                      setState(() {activeButton = 1;});}), text: 'Plants', textColor: (activeButton == 1 ? primary : darkGreyColor)),
                   ),
-                ),
-                SizedBox(
-                  width: 90,
-                  height: 35,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: (activeButton == 2 ? lightBlack : primary), backgroundColor: (activeButton == 2 ? Colors.white : lightGrey),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        side: BorderSide(
-                          color: (activeButton == 2 ? primary : lightGrey),
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    onPressed: ((){
-                      setState(() {
-                        activeButton = 2;
-                      });
-                    }),
-                    child: Text('Seeds', style: TextStyle(color: (activeButton == 2 ? primary
-                        : darkGreyColor),fontWeight: FontWeight.bold,)),
+
+                  SizedBox(
+                    width: 90,
+                    height: 35,
+                    child: customBtn(forColor: (activeButton == 2 ? lightBlack : primary), backColor: (activeButton == 2 ? Colors.white : lightGrey), color: (activeButton == 2 ? primary : lightGrey), onPressed: ((){setState(() {activeButton = 2;});
+                    }), text: 'Seeds', textColor: (activeButton == 2 ? primary : darkGreyColor),),
                   ),
-                ),
-                SizedBox(
-                  width: 90,
-                  height: 35,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: (activeButton == 3 ? lightBlack
-                          : primary), backgroundColor: (activeButton == 3 ? Colors.white : lightGrey),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        side: BorderSide(
-                          color: (activeButton == 3 ? primary : lightGrey),
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    onPressed: ((){
-                      setState(() {
-                        //widget.onFilterChanged!(e.id!);
-                        activeButton = 3;
-                      });
-                    }),
-                    child: Text('Tools', style: TextStyle(color: (activeButton == 3 ? primary
-                        : darkGreyColor),fontWeight: FontWeight.bold, )),
+
+                  SizedBox(
+                    width: 90,
+                    height: 35,
+                    child: customBtn(forColor: (activeButton == 3 ? lightBlack : primary), backColor: (activeButton == 3 ? Colors.white : lightGrey), color: (activeButton == 3 ? primary : lightGrey), onPressed: ((){
+                      setState(() {activeButton = 3;});}), text: 'Tools', textColor: (activeButton == 3 ? primary : darkGreyColor),),
                   ),
-                ),
-              ],),
-          ),
-              const SizedBox(height: 30,),
-/*
-               Expanded(
-                child: GridView.count(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  physics: const BouncingScrollPhysics(),
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.9,
-                  children: List.generate(
-                    Products.AllProducts.length, (index) => AllProducts(Products.AllProducts[index] , this.context),
-                  ),
+                ],
                 ),
               ),
-*/
+              const SizedBox(height: 30,),
 
-             /* Expanded(
-              child: myHome.productsModel == null ? const CircularProgressIndicator() : GridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 1,
-                crossAxisSpacing: 1,
-                childAspectRatio: 0.55,
-                children: List.generate(myHome.productsModel!.data!.length, (index) {
-                  if(activeButton == 0){
-                   buildGridProducts(allProducts: myHome.productsModel!.data![index]);
-                  } else if(activeButton == 1){
-                    getPlant(plantData: myHome.plantModel!.data![index]);
-                  }else if(activeButton == 2){
-                    getPlant(plantData: myHome.plantModel!.data![index]);
-                  }else if(activeButton == 3){
-                    getPlant(plantData: myHome.plantModel!.data![index]);
-                  }
-
-                  return const Center(child: CircularProgressIndicator(color: primary,));
-                }
-                ),
-              )
-          )*/
-
-           /*   Expanded(child: GridView.count(
-                crossAxisCount: 2,
-                children:[
-                  Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        SizedBox(
-                          width: 800,
-                          height: 800.0,
-                          child: Container(),
-                        ),
-                        const Positioned(
-                            top: 20,
-                            left: 20,
-                            right: 20,
-                            bottom: 6,
-                            child: Card(elevation: 10,)),
-                        Positioned(
-                          top: 23,
-                          left: 20,
-                          right: 20,
-                          bottom: 0,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Positioned(
-                          top: 30,
-                          right: 30,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  if (quantity != 1) {
-                                    quantity = quantity - 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.remove,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 5,),
-                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                              const SizedBox(width: 5,),
-                              InkWell(
-                                onTap: (){
-                                  if (quantity >= 1) {
-                                    quantity = quantity + 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                          top: 100,
-                          left: 10,
-                          child: SizedBox(
-                            height: 85,
-                            width: 202,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.white,),
-                                  children: [
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].name}\n',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].price!} EGP',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                        Positioned(
-                          bottom: 5,
-                          left: 30,
-                          right: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 18.0),
-                            child: ElevatedButton(
-                                onPressed: (){
-
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: primary,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0))),
-                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                          ),
-                        ),
-
-                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                          right: 50,
-                          bottom: 95,
-                          width: 150,
-                          height: 110,
-                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
-                          ),)
-
-                      ]),
-                  Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        SizedBox(
-                          width: 800,
-                          height: 800.0,
-                          child: Container(),
-                        ),
-                        const Positioned(
-                            top: 20,
-                            left: 20,
-                            right: 20,
-                            bottom: 6,
-                            child: Card(elevation: 10,)),
-                        Positioned(
-                          top: 23,
-                          left: 20,
-                          right: 20,
-                          bottom: 0,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Positioned(
-                          top: 30,
-                          right: 30,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  if (quantity != 1) {
-                                    quantity = quantity - 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.remove,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 5,),
-                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                              const SizedBox(width: 5,),
-                              InkWell(
-                                onTap: (){
-                                  if (quantity >= 1) {
-                                    quantity = quantity + 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                        top: 100,
-                        left: 10,
-                        child: SizedBox(
-                          height: 85,
-                          width: 202,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: RichText(
-                              text: TextSpan(
-                                style: const TextStyle(color: Colors.white,),
-                                children: [
-                                  TextSpan(
-                                    text: '${myHome.productModel!.data![2].name}\n',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 12
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '${myHome.productModel!.data![2].price!} EGP',
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                        Positioned(
-                          bottom: 5,
-                          left: 30,
-                          right: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 18.0),
-                            child: ElevatedButton(
-                                onPressed: (){
-
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: primary,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0))),
-                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                          ),
-                        ),
-                        Positioned(
-                        right: 50,
-                        bottom: 90,
-                        width: 150,
-                        height: 110,
-                        child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
-                        ),)
-                      ]),
-                  Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        SizedBox(
-                          width: 800,
-                          height: 800.0,
-                          child: Container(),
-                        ),
-                        const Positioned(
-                            top: 20,
-                            left: 20,
-                            right: 20,
-                            bottom: 6,
-                            child: Card(elevation: 10,)),
-                        Positioned(
-                          top: 23,
-                          left: 20,
-                          right: 20,
-                          bottom: 0,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Positioned(
-                          top: 30,
-                          right: 30,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  if (quantity != 1) {
-                                    quantity = quantity - 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.remove,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 5,),
-                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                              const SizedBox(width: 5,),
-                              InkWell(
-                                onTap: (){
-                                  if (quantity >= 1) {
-                                    quantity = quantity + 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                          top: 100,
-                          left: 10,
-                          child: SizedBox(
-                            height: 85,
-                            width: 202,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.white,),
-                                  children: [
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].name}\n',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].price!} EGP',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                        Positioned(
-                          bottom: 5,
-                          left: 30,
-                          right: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 18.0),
-                            child: ElevatedButton(
-                                onPressed: (){
-
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: primary,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0))),
-                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                          ),
-                        ),
-
-                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                          right: 50,
-                          bottom: 95,
-                          width: 150,
-                          height: 110,
-                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
-                          ),)
-
-                      ]),
-                  Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        SizedBox(
-                          width: 800,
-                          height: 800.0,
-                          child: Container(),
-                        ),
-                        const Positioned(
-                            top: 20,
-                            left: 20,
-                            right: 20,
-                            bottom: 6,
-                            child: Card(elevation: 10,)),
-                        Positioned(
-                          top: 23,
-                          left: 20,
-                          right: 20,
-                          bottom: 0,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Positioned(
-                          top: 30,
-                          right: 30,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  if (quantity != 1) {
-                                    quantity = quantity - 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.remove,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 5,),
-                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                              const SizedBox(width: 5,),
-                              InkWell(
-                                onTap: (){
-                                  if (quantity >= 1) {
-                                    quantity = quantity + 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 100,
-                          left: 10,
-                          child: SizedBox(
-                            height: 85,
-                            width: 202,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.white,),
-                                  children: [
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].name}\n',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].price!} EGP',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 5,
-                          left: 30,
-                          right: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 18.0),
-                            child: ElevatedButton(
-                                onPressed: (){
-
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: primary,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0))),
-                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                          ),
-                        ),
-                        Positioned(
-                          right: 50,
-                          bottom: 90,
-                          width: 150,
-                          height: 110,
-                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
-                          ),)
-                      ]),
-                  Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        SizedBox(
-                          width: 800,
-                          height: 800.0,
-                          child: Container(),
-                        ),
-                        const Positioned(
-                            top: 20,
-                            left: 20,
-                            right: 20,
-                            bottom: 6,
-                            child: Card(elevation: 10,)),
-                        Positioned(
-                          top: 23,
-                          left: 20,
-                          right: 20,
-                          bottom: 0,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Positioned(
-                          top: 30,
-                          right: 30,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  if (quantity != 1) {
-                                    quantity = quantity - 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.remove,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 5,),
-                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                              const SizedBox(width: 5,),
-                              InkWell(
-                                onTap: (){
-                                  if (quantity >= 1) {
-                                    quantity = quantity + 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                          top: 100,
-                          left: 10,
-                          child: SizedBox(
-                            height: 85,
-                            width: 202,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.white,),
-                                  children: [
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].name}\n',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].price!} EGP',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                        Positioned(
-                          bottom: 5,
-                          left: 30,
-                          right: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 18.0),
-                            child: ElevatedButton(
-                                onPressed: (){
-
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: primary,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0))),
-                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                          ),
-                        ),
-
-                        myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-                          right: 50,
-                          bottom: 95,
-                          width: 150,
-                          height: 110,
-                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
-                          ),)
-
-                      ]),
-                  Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        SizedBox(
-                          width: 800,
-                          height: 800.0,
-                          child: Container(),
-                        ),
-                        const Positioned(
-                            top: 20,
-                            left: 20,
-                            right: 20,
-                            bottom: 6,
-                            child: Card(elevation: 10,)),
-                        Positioned(
-                          top: 23,
-                          left: 20,
-                          right: 20,
-                          bottom: 0,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Positioned(
-                          top: 30,
-                          right: 30,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  if (quantity != 1) {
-                                    quantity = quantity - 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.remove,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 5,),
-                              Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                              const SizedBox(width: 5,),
-                              InkWell(
-                                onTap: (){
-                                  if (quantity >= 1) {
-                                    quantity = quantity + 1;
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 100,
-                          left: 10,
-                          child: SizedBox(
-                            height: 85,
-                            width: 202,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.white,),
-                                  children: [
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].name}\n',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '${myHome.productModel!.data![2].price!} EGP',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 5,
-                          left: 30,
-                          right: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 18.0),
-                            child: ElevatedButton(
-                                onPressed: (){
-
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: primary,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0))),
-                                child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                          ),
-                        ),
-                        Positioned(
-                          right: 50,
-                          bottom: 90,
-                          width: 150,
-                          height: 110,
-                          child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![2].imageUrl!}',
-                          ),)
-                      ]),
-
-              ])),*/
               Expanded(
                   child: activeButton == 0
                       ? buildGridProduct(myHome.productModel)
@@ -1149,10 +203,10 @@ fetch(){
               bottom: 6,
               child: Card(elevation: 10,)),
           Positioned(
-            top: 23,
+            top: 25,
             left: 20,
             right: 20,
-            bottom: 0,
+            bottom: 2,
             child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -1214,7 +268,7 @@ fetch(){
           ),
 
           productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            top: 100,
+            top: 80,
             left: 10,
             child: SizedBox(
               height: 85,
@@ -1249,29 +303,30 @@ fetch(){
 
 
           Positioned(
-            bottom: 5,
+            bottom: 8,
             left: 30,
             right: 30,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
+            child: SizedBox(
+              //width: 50,
+              height: 30,
               child: ElevatedButton(
-                  onPressed: (){
+                    onPressed: (){
 
-                  },
-                  style: TextButton.styleFrom(
-                      backgroundColor: primary,
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(10.0))),
-                  child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
+                    },
+                    style: TextButton.styleFrom(
+                        backgroundColor: primary,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(10.0))),
+                    child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
             ),
           ),
 
           productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            right: 50,
-            bottom: 95,
-            width: 150,
-            height: 110,
+            right: 70,
+            bottom: 70,
+            width: 100,
+            height: 80,
             child: Image.network('https://lavie.orangedigitalcenteregypt.com${productModel?.data![index].imageUrl!}',
             ),)
 
@@ -1299,10 +354,10 @@ fetch(){
               bottom: 6,
               child: Card(elevation: 10,)),
           Positioned(
-            top: 23,
+            top: 25,
             left: 20,
             right: 20,
-            bottom: 0,
+            bottom: 2,
             child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -1364,7 +419,7 @@ fetch(){
           ),
 
           plantModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            top: 100,
+            top: 80,
             left: 10,
             child: SizedBox(
               height: 85,
@@ -1399,11 +454,12 @@ fetch(){
 
 
           Positioned(
-            bottom: 5,
+            bottom: 8,
             left: 30,
             right: 30,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
+            child: SizedBox(
+              //width: 50,
+              height: 30,
               child: ElevatedButton(
                   onPressed: (){
 
@@ -1418,12 +474,14 @@ fetch(){
           ),
 
           plantModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            right: 50,
-            bottom: 95,
-            width: 150,
-            height: 110,
-            child: Image.network('https://lavie.orangedigitalcenteregypt.com${plantModel?.data![index].imageUrl!}',
-            ),)
+            right: 90,
+            bottom: 70,
+            width: 75,
+            height: 80,
+            child: plantModel!.data![index].imageUrl != ''
+                ? Image.network('https://lavie.orangedigitalcenteregypt.com${plantModel.data![index].imageUrl!}', )
+                : Image.asset('assets/images/plant.jpg')
+          )
 
         ]), itemCount: plantModel?.data?.length,);
   }
@@ -1449,10 +507,10 @@ fetch(){
               bottom: 6,
               child: Card(elevation: 10,)),
           Positioned(
-            top: 23,
+            top: 25,
             left: 20,
             right: 20,
-            bottom: 0,
+            bottom: 2,
             child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -1514,7 +572,7 @@ fetch(){
           ),
 
           seedModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            top: 100,
+            top: 80,
             left: 10,
             child: SizedBox(
               height: 85,
@@ -1549,11 +607,12 @@ fetch(){
 
 
           Positioned(
-            bottom: 5,
+            bottom: 8,
             left: 30,
             right: 30,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
+            child: SizedBox(
+              //width: 50,
+              height: 30,
               child: ElevatedButton(
                   onPressed: (){
 
@@ -1568,12 +627,14 @@ fetch(){
           ),
 
           seedModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            right: 50,
-            bottom: 95,
-            width: 150,
-            height: 110,
-            child: Image.network('https://lavie.orangedigitalcenteregypt.com${seedModel?.data![index].imageUrl!}',
-            ),)
+            right: 85,
+            bottom: 70,
+            width: 75,
+            height: 80,
+            child: seedModel!.data![index].imageUrl != ''
+                ? Image.network('https://lavie.orangedigitalcenteregypt.com${seedModel.data![index].imageUrl!}',)
+                : Image.asset('assets/images/seed.jpg')
+          )
 
         ]), itemCount: seedModel?.data?.length,);
   }
@@ -1599,10 +660,10 @@ fetch(){
               bottom: 6,
               child: Card(elevation: 10,)),
           Positioned(
-            top: 23,
+            top: 25,
             left: 20,
             right: 20,
-            bottom: 0,
+            bottom: 2,
             child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -1664,7 +725,7 @@ fetch(){
           ),
 
           toolModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            top: 100,
+            top: 80,
             left: 10,
             child: SizedBox(
               height: 85,
@@ -1699,11 +760,12 @@ fetch(){
 
 
           Positioned(
-            bottom: 5,
+            bottom: 8,
             left: 30,
             right: 30,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
+            child: SizedBox(
+              //width: 50,
+              height: 30,
               child: ElevatedButton(
                   onPressed: (){
 
@@ -1718,670 +780,18 @@ fetch(){
           ),
 
           toolModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            right: 50,
-            bottom: 95,
-            width: 150,
-            height: 110,
-            child: Image.network('https://lavie.orangedigitalcenteregypt.com${toolModel?.data![index].imageUrl!}',
-            ),)
+            right: 85,
+            bottom: 70,
+            width: 75,
+            height: 80,
+            child: toolModel?.data![index].imageUrl != ''
+                ? Image.network('https://lavie.orangedigitalcenteregypt.com${toolModel?.data![index].imageUrl!}',)
+                : Image.asset('assets/images/tool.jpg')
+          )
 
         ]), itemCount: toolModel?.data?.length,);
   }
 
 
-
-/*
-  Widget buildGridProducts({required ProductData Product}){
-    return Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          SizedBox(
-            width: 800,
-            height: 800.0,
-            child: Container(),
-          ),
-          const Positioned(
-              top: 20,
-              left: 20,
-              right: 20,
-              bottom: 6,
-              child: Card(elevation: 10,)),
-          Positioned(
-            top: 23,
-            left: 20,
-            right: 20,
-            bottom: 0,
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade200,
-                      spreadRadius: 2,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                )),
-          ),
-          Positioned(
-            top: 30,
-            right: 30,
-            child: Row(
-              children: [
-                InkWell(
-                  onTap: (){
-                    if (quantity != 1) {
-                      quantity = quantity - 1;
-                      setState(() {});
-                    }
-                  },
-                  child: Container(
-                    width: 16,
-                    height: 16,
-                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                    child: const Icon(
-                      Icons.remove,
-                      size: 10,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5,),
-                Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                const SizedBox(width: 5,),
-                InkWell(
-                  onTap: (){
-                    if (quantity >= 1) {
-                      quantity = quantity + 1;
-                      setState(() {});
-                    }
-                  },
-                  child: Container(
-                    width: 16,
-                    height: 16,
-                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                    child: const Icon(
-                      Icons.add,
-                      size: 10,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          produ?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            top: 130,
-            left: 10,
-            child: SizedBox(
-              height: 85,
-              width: 202,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: RichText(
-                  text: TextSpan(
-                    style: const TextStyle(color: Colors.white,),
-                    children: [
-                      TextSpan(
-                        text: '${myHome.productModel!.data![2].name}\n',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 12
-                        ),
-                      ),
-                      TextSpan(
-                        text: '${myHome.productModel!.data![2].price!} EGP',
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 12
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-
-          Positioned(
-            bottom: 10,
-            left: 30,
-            right: 30,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: ElevatedButton(
-                  onPressed: (){
-
-                  },
-                  style: TextButton.styleFrom(
-                      backgroundColor: primary,
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(10.0))),
-                  child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-            ),
-          ),
-
-          myHome.productModel?.data == null ? const Center(child: CircularProgressIndicator(color: primary,)) : Positioned(
-            right: 80,
-            bottom: 95,
-            width: 150,
-            height: 110,
-            child: Image.network('https://lavie.orangedigitalcenteregypt.com${myHome.productModel!.data![1].imageUrl!}',
-            ),)
-
-        ]);
-  }
-*/
-/*
-  Widget getPlant({required PlantData plantData}){
-    HomeCubit myPlant = HomeCubit.get(context);
-    return BlocProvider(
-      create: (BuildContext context) { return HomeCubit()..getPlant(); },
-      child: BlocConsumer(
-        listener: (BuildContext context, state) {  },
-        builder: (BuildContext context, Object? state) {
-          HomeCubit myPlant = HomeCubit.get(context);
-          return Expanded(
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              children: List.generate(
-                myPlant.plantModel!.data!.length,
-                  (index) => Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          SizedBox(
-                            width: 800,
-                            height: 800.0,
-                            child: Container(),
-                          ),
-                const Positioned(
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                    bottom: 6,
-                    child: Card(elevation: 10,)),
-
-
-                          Positioned(
-                            top: 23,
-                            left: 20,
-                            right: 20,
-                            bottom: 0,
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.shade200,
-                                      spreadRadius: 2,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                )),
-                          ),
-                          Positioned(
-                            top: 30,
-                            right: 30,
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  onTap: (){
-                                    if (quantity != 1) {
-                                      quantity = quantity - 1;
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 16,
-                                    height: 16,
-                                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                    child: const Icon(
-                                      Icons.remove,
-                                      size: 10,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5,),
-                                Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                const SizedBox(width: 5,),
-                                InkWell(
-                                  onTap: (){
-                                    if (quantity >= 1) {
-                                      quantity = quantity + 1;
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 16,
-                                    height: 16,
-                                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                    child: const Icon(
-                                      Icons.add,
-                                      size: 10,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: 130,
-                            left: 10,
-                            child: SizedBox(
-                              height: 85,
-                              width: 202,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(color: Colors.white,),
-                                    children: [
-                                      TextSpan(
-                                        text: '${myPlant.plantModel!.data![0].name}\n',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '${myPlant.plantModel!.data![0].plantId} EGP',
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 10,
-                            left: 30,
-                            right: 30,
-                            child:
-GetBuilder<CartViewModel>(
-                                              init: CartViewModel(),
-                                              builder: (controller) =>
-
-                            Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: ElevatedButton(
-                                  onPressed: (){
-
-                                  },
-                                  style: TextButton.styleFrom(
-                                      backgroundColor: primary,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(10.0))),
-                                  child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                            ),
-                          ),
-                          Positioned(
-                            right: 80,
-                            bottom: 95,
-                            width: 150,
-                            height: 110,
-                            child: Image.network(myPlant.plantModel!.data![0].imageUrl!,
-                            ),)
-                        ]),
-                  )
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget getSeed({required PlantData plantData}){
-    HomeCubit myPlant = HomeCubit.get(context);
-    return BlocProvider(
-      create: (BuildContext context) { return HomeCubit()..getPlant(); },
-      child: BlocConsumer(
-        listener: (BuildContext context, state) {  },
-        builder: (BuildContext context, Object? state) {
-          HomeCubit myPlant = HomeCubit.get(context);
-          return Expanded(
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              children: List.generate(
-                  myPlant.plantModel!.data!.length,
-                      (index) => Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          SizedBox(
-                            width: 800,
-                            height: 800.0,
-                            child: Container(),
-                          ),
-                const Positioned(
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                    bottom: 6,
-                    child: Card(elevation: 10,)),
-
-
-                          Positioned(
-                            top: 23,
-                            left: 20,
-                            right: 20,
-                            bottom: 0,
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.shade200,
-                                      spreadRadius: 2,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                )),
-                          ),
-                          Positioned(
-                            top: 30,
-                            right: 30,
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  onTap: (){
-                                    if (quantity != 1) {
-                                      quantity = quantity - 1;
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 16,
-                                    height: 16,
-                                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                    child: const Icon(
-                                      Icons.remove,
-                                      size: 10,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5,),
-                                Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                const SizedBox(width: 5,),
-                                InkWell(
-                                  onTap: (){
-                                    if (quantity >= 1) {
-                                      quantity = quantity + 1;
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 16,
-                                    height: 16,
-                                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                    child: const Icon(
-                                      Icons.add,
-                                      size: 10,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: 130,
-                            left: 10,
-                            child: SizedBox(
-                              height: 85,
-                              width: 202,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(color: Colors.white,),
-                                    children: [
-                                      TextSpan(
-                                        text: '${myPlant.plantModel!.data![0].name}\n',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '${myPlant.plantModel!.data![0].plantId} EGP',
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 10,
-                            left: 30,
-                            right: 30,
-                            child:
-GetBuilder<CartViewModel>(
-                                              init: CartViewModel(),
-                                              builder: (controller) =>
-
-                            Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: ElevatedButton(
-                                  onPressed: (){
-
-                                  },
-                                  style: TextButton.styleFrom(
-                                      backgroundColor: primary,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(10.0))),
-                                  child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                            ),
-                          ),
-                          Positioned(
-                            right: 80,
-                            bottom: 95,
-                            width: 150,
-                            height: 110,
-                            child: Image.network(myPlant.plantModel!.data![0].imageUrl!,
-                            ),)
-                        ]),
-                  )
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget getTools({required PlantData plantData}){
-    HomeCubit myPlant = HomeCubit.get(context);
-    return BlocProvider(
-      create: (BuildContext context) { return HomeCubit()..getPlant(); },
-      child: BlocConsumer(
-        listener: (BuildContext context, state) {  },
-        builder: (BuildContext context, Object? state) {
-          HomeCubit myPlant = HomeCubit.get(context);
-          return Expanded(
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              children: List.generate(
-                  myPlant.plantModel!.data!.length,
-                      (index) => Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          SizedBox(
-                            width: 800,
-                            height: 800.0,
-                            child: Container(),
-                          ),
-                const Positioned(
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                    bottom: 6,
-                    child: Card(elevation: 10,)),
-
-
-                          Positioned(
-                            top: 23,
-                            left: 20,
-                            right: 20,
-                            bottom: 0,
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.shade200,
-                                      spreadRadius: 2,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                )),
-                          ),
-                          Positioned(
-                            top: 30,
-                            right: 30,
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  onTap: (){
-                                    if (quantity != 1) {
-                                      quantity = quantity - 1;
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 16,
-                                    height: 16,
-                                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                    child: const Icon(
-                                      Icons.remove,
-                                      size: 10,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5,),
-                                Text(quantity.toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
-                                const SizedBox(width: 5,),
-                                InkWell(
-                                  onTap: (){
-                                    if (quantity >= 1) {
-                                      quantity = quantity + 1;
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 16,
-                                    height: 16,
-                                    decoration: BoxDecoration(color: lightBlack,borderRadius: BorderRadius.circular(2)),
-                                    child: const Icon(
-                                      Icons.add,
-                                      size: 10,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: 130,
-                            left: 10,
-                            child: SizedBox(
-                              height: 85,
-                              width: 202,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(color: Colors.white,),
-                                    children: [
-                                      TextSpan(
-                                        text: '${myPlant.plantModel!.data![0].name}\n',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '${myPlant.plantModel!.data![0].plantId} EGP',
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 10,
-                            left: 30,
-                            right: 30,
-                            child:
-GetBuilder<CartViewModel>(
-                                              init: CartViewModel(),
-                                              builder: (controller) =>
-
-                            Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: ElevatedButton(
-                                  onPressed: (){
-
-                                  },
-                                  style: TextButton.styleFrom(
-                                      backgroundColor: primary,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(10.0))),
-                                  child: const Text('Add To Cart', style: TextStyle(color: Colors.white, fontSize: 14))),
-                            ),
-                          ),
-                          Positioned(
-                            right: 80,
-                            bottom: 95,
-                            width: 150,
-                            height: 110,
-                            child: Image.network(myPlant.plantModel!.data![0].imageUrl!,
-                            ),)
-                        ]),
-                  )
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }*/
 
 }

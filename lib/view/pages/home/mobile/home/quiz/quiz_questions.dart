@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lavie_web/view/components/home_mobile/home_component.dart';
 import 'package:lavie_web/view/components/styles/colors.dart';
+import 'package:lavie_web/view/pages/home/mobile/navigation_bottom_bar.dart';
 
 import '../../../../../../model/home/questions_model.dart';
+import '../../../../../components/auth/auth_components.dart';
 import 'options.dart';
 
 
@@ -81,7 +84,7 @@ class _QuizQuestionsState extends State<QuizQuestions> {
                       ),
                     ),
                     TextSpan(
-                      text: '${questions.length}',
+                      text: '/${questions.length}',
                       style: TextStyle(
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w500,
@@ -95,7 +98,7 @@ class _QuizQuestionsState extends State<QuizQuestions> {
               ),
               const SizedBox(height: 40,),
               SizedBox(
-                height: 50,
+                height: MediaQuery.of(context).size.height*.6,
                 child: PageView.builder(
                   itemCount: questions.length,
                   itemBuilder: (context , index){
@@ -106,12 +109,35 @@ class _QuizQuestionsState extends State<QuizQuestions> {
 
                 ),
               ),
-              Align(
-                child:buildElevautedButton(),
+              questionNumber == 1
+                  ? Align(
+                child: buildElevautedButton(),
                 alignment: Alignment.bottomRight,
+              )
+                  : Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                        width: 140,
+                        height: 43,
+                        child: customBtn(forColor: primary, backColor: Colors.white, color: primary, onPressed: (){
+                          if(questionNumber != 1){
+                            controller.nextPage(
+                              duration : const Duration(milliseconds: 250,),
+                              curve: Curves.easeInExpo,
+
+                            );
+                            setState(() {
+                              questionNumber--;
+                            });
+                          }
+                        }, text: 'Back', textColor: primary)),
+                    buildElevautedButton(),
+                  ],
+                ),
               ),
               const SizedBox(height: 20,),
-
             ],
           ),
         ),
@@ -132,7 +158,7 @@ class _QuizQuestionsState extends State<QuizQuestions> {
           ),
         ),
         const SizedBox(height: 32,),
-        Options(),
+        Options()
       ],
     );
   }
@@ -145,7 +171,7 @@ class _QuizQuestionsState extends State<QuizQuestions> {
 
       ),
       clipBehavior: Clip.hardEdge,
-      width: 172,
+      width: 140,
       height: 43,
       child: MaterialButton(
         textColor: Colors.white,
@@ -160,10 +186,10 @@ class _QuizQuestionsState extends State<QuizQuestions> {
               questionNumber++;
             });
           }else{
-            //navigateAndFinish(context, LayOutScreen());
+            navigateAndFinish(context, const NavigationBottomBar());
           }
         }, child: Text(
-        questionNumber <questions.length ? 'Next': 'See the result',
+        questionNumber <questions.length ? 'Next': 'Finish',
       ),),
     );
   }

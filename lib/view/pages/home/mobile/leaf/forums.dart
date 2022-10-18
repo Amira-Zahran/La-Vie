@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavie_web/model/forums/forums_model.dart';
+import 'package:lavie_web/view/components/home_mobile/home_component.dart';
 import 'package:lavie_web/view/pages/home/mobile/leaf/add_forums/add_forums.dart';
+import 'package:lavie_web/view/pages/home/mobile/navigation_bottom_bar.dart';
 import 'package:lavie_web/view_model/cubit/home/fourms_cubit.dart';
 import 'package:lavie_web/view_model/cubit/states.dart';
 
@@ -17,29 +19,14 @@ class Forums extends StatefulWidget {
 }
 
 class _ForumsState extends State<Forums> {
-int index = 0 ;
 
-/*
-fetchData()async{
-  await ForumsCubit.get(context).getForums(index).then((_)async{
-    await ForumsCubit.get(context).getMyForums(index);
-  });
-  }
-*/
+  int activeButton = 0;
 
-
-
-/*
-@override
-  void initState() {
-  fetchData();
-  super.initState();
-}*/
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) { return ForumsCubit(); },
+      create: (BuildContext context) { return ForumsCubit()..getForums(); },
       child: BlocConsumer<ForumsCubit , CubitStates>(
           listener: (context , state){},
           builder: (context , state) {
@@ -59,9 +46,9 @@ fetchData()async{
                 appBar: AppBar(
                   leading: InkWell(
                       onTap: (){
-                        //Navigator.push(context, MaterialPageRoute(builder: (context)=> LayOutScreen()));
+                        navigateTo(context, const NavigationBottomBar());
                       },
-                      child: const Icon(Icons.keyboard_backspace,),),
+                      child: const Icon(Icons.arrow_back_ios,),),
                   elevation: 0,
                   centerTitle: true,
                   iconTheme: const IconThemeData(
@@ -77,7 +64,7 @@ fetchData()async{
                     ),
                   ),
                 ),
-                body: (state is ForumsLoadingState || state is MyForumLoadingState)?const Center(child: CircularProgressIndicator(),):Padding(
+                body: Padding(
                   padding:  const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
@@ -132,100 +119,164 @@ fetchData()async{
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: TabBar(
-                          isScrollable: true,
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          indicatorColor: Colors.transparent,
-                          tabs: [
-                          Container(
-                            width: 112,
-                            height: 26,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 1,
-                                color: Colors.grey,
-                              ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              height: 35,
+                              child: customBtn(forColor: (activeButton == 0 ? lightBlack : primary), backColor: (activeButton == 0 ? primary : lightGrey), color: (activeButton == 0 ? primary : lightGrey), onPressed: ((){setState(() {activeButton = 0;});
+                              }), text: 'All Forums', textColor: (activeButton == 0 ? Colors.white : darkGreyColor),),
                             ),
-                            child: const Center(
-                              child: Text(
-                                'All forums',
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff979797),
-                                ),
-                              ),
+                            SizedBox(
+                              width: 150,
+                              height: 35,
+                              child: customBtn(forColor: (activeButton == 1 ? lightBlack : primary), backColor: (activeButton == 1 ? Colors.white : lightGrey), color: (activeButton == 1 ? primary : lightGrey), onPressed: ((){setState(() {activeButton = 1;});
+                              }), text: 'My Forums', textColor: (activeButton == 1 ? primary : darkGreyColor),),
                             ),
-                          ),
-                          Container(
-                            width: 112,
-                            height: 26,
-                            decoration: BoxDecoration(
-                              color: primary,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 1,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'My forums',
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-
-                        ],
-                        ),
+                          ],
+                        )
                       ),
                       Expanded(
-                        child: TabBarView(children: [
-                          Column(
-                            children: [
-                              Expanded(
-                                child: (forums.forumModel!.data!.isNotEmpty)  ? ListView.separated(
-                                  separatorBuilder: (context , index) => const SizedBox(height: 20,),
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder: (context , index) => buildForumItem(forums.forumModel!.data![index]),
-                                  itemCount: forums.forumModel!.data!.length,
-                                ) : const Center(child: CircularProgressIndicator(),),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const SizedBox(height: 22,),
-                              Expanded(
-                                child: (forums.myForumModel!.data.isEmpty) ? const Center(child: CircularProgressIndicator()):ListView.separated(
-                                  separatorBuilder: (context , index) => const SizedBox(height: 20,),
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder: (context , index) => buildMyPostItem(forums.myForumModel!.data[index],),
-                                  itemCount: forums.myForumModel!.data.length,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],),
+                        child: forums.forumModel?.data != null  ? activeButton == 0
+                            ? buildForumItem(forums.forumModel)
+                            : buildMyForumItem(forums.myForumModel!)
+                            : const Center(child: CircularProgressIndicator(color: primary,),),
                       ),
-                    ],
+                     ],),
+                      ),
                   ),
-                ),
-              ),
             );
           },
       ),
     );
   }
 
-Widget buildForumItem(ForumData model) => Column(
+Widget buildForumItem(ForumModel? forumModel) => ListView.separated(
+    separatorBuilder: (context , index) => const SizedBox(height: 20,),
+    scrollDirection: Axis.vertical,
+    itemBuilder: (context , index) => Column(
+      children: [
+        Container(
+          width: 380,
+          height: 314,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: Colors.black.withOpacity(0.1),
+            ),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding:  const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 25,
+                          //backgroundImage: NetworkImage(ForumsCubit.get(context).profileModel!.data.imageUrl,),
+                          backgroundColor: primary,
+                        ),
+                        const SizedBox(width: 12,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text( '${forumModel.data![index].publisher!.firstName} ${forumModel.data![index].publisher!.lastName}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                            const SizedBox(height: 5,),
+                            Text('A month ago',
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontSize: 11,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xff979797).withOpacity(0.84),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20,),
+                    Text('${forumModel.data![index].title}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        fontFamily: 'Roboto',
+                        color: primary,
+                      ),
+                    ),
+                    const SizedBox(height: 20,),
+                    Text('${forumModel.data![index].description}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 11,
+                        fontFamily: 'Roboto',
+                        color: Color(0xff8F8D8D),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                child: Column(
+                  children: [
+                    Flexible(
+                      child: forumModel.data![index].imageUrl != ''  ? Image.network('https://lavie.orangedigitalcenteregypt.com${forumModel.data![index].imageUrl}',
+                        width: double.infinity  ,
+                        fit: BoxFit.cover,) : Image.network('https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623959191-medium-plant-dieffenbachia-white-pot_2048x.jpg'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding:  const EdgeInsets.symmetric(vertical: 5.0),
+          child: Row(
+            children: [
+              const Icon(Icons.thumb_up_alt_outlined,
+                size: 20,
+                color: Color(0xff666565),
+              ),
+              const SizedBox(width: 5,),
+              Text('${forumModel.data![index].forumLikes!.length} Likes',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black.withOpacity(.6),
+                ),
+              ),
+              const SizedBox(width: 40,),
+              Text(' ${forumModel.data![index].forumComments!.length} replies',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black.withOpacity(.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+    itemCount: forumModel!.data!.length,
+);
+
+Widget buildMyForumItem(MyForumModel? myForumModel) => ListView.separated(
+  separatorBuilder: (context , index) => const SizedBox(height: 20,),
+  scrollDirection: Axis.vertical,
+  itemBuilder: (context , index) => Column(
     children: [
       Container(
         width: 380,
@@ -245,7 +296,7 @@ Widget buildForumItem(ForumData model) => Column(
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 25,
                         //backgroundImage: NetworkImage(ForumsCubit.get(context).profileModel!.data.imageUrl,),
                         backgroundColor: primary,
@@ -254,7 +305,7 @@ Widget buildForumItem(ForumData model) => Column(
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text( 'name',//'${ForumsCubit.get(context).profileModel!.data.firstName} ${ForumsCubit.get(context).profileModel!.data.lastName}',
+                          Text( '${myForumModel.data[index].user.firstName} ${myForumModel.data[index].user.lastName}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 13,
@@ -275,7 +326,7 @@ Widget buildForumItem(ForumData model) => Column(
                     ],
                   ),
                   const SizedBox(height: 20,),
-                  Text('${model.title}',
+                  Text(myForumModel.data[index].title,
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
@@ -284,7 +335,7 @@ Widget buildForumItem(ForumData model) => Column(
                     ),
                   ),
                   const SizedBox(height: 20,),
-                  Text('${model.description}',
+                  Text(myForumModel.data[index].description,
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 11,
@@ -299,9 +350,9 @@ Widget buildForumItem(ForumData model) => Column(
               child: Column(
                 children: [
                   Flexible(
-                    child: model.imageUrl != ''  ? Image.network('https://lavie.orangedigitalcenteregypt.com${model.imageUrl}',
-                    width: double.infinity  ,
-                    fit: BoxFit.cover,) : Image.network('https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623959191-medium-plant-dieffenbachia-white-pot_2048x.jpg'),
+                    child: myForumModel.data[index].imageUrl != ''  ? Image.network('https://lavie.orangedigitalcenteregypt.com${myForumModel.data[index].imageUrl}',
+                      width: double.infinity  ,
+                      fit: BoxFit.cover,) : Image.network('https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623959191-medium-plant-dieffenbachia-white-pot_2048x.jpg'),
                   ),
                 ],
               ),
@@ -318,7 +369,7 @@ Widget buildForumItem(ForumData model) => Column(
               color: Color(0xff666565),
             ),
             const SizedBox(width: 5,),
-            Text('${model.forumLikes!.length} Likes',
+            Text('${myForumModel.data[index].ForumLikes.length} Likes',
               style: TextStyle(
                 fontFamily: 'Roboto',
                 fontSize: 11,
@@ -327,7 +378,7 @@ Widget buildForumItem(ForumData model) => Column(
               ),
             ),
             const SizedBox(width: 40,),
-            Text(' ${model.forumComments!.length} replies',
+            Text(' ${myForumModel.data[index].ForumComments.length} replies',
               style: TextStyle(
                 fontFamily: 'Roboto',
                 fontSize: 11,
@@ -339,120 +390,8 @@ Widget buildForumItem(ForumData model) => Column(
         ),
       ),
     ],
-  );
-Widget buildMyPostItem(MyForumData model) => Column(
-  children: [
-    Container(
-      width: 380,
-      height: 314,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: Colors.black.withOpacity(0.1),
-        ),
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding:  const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(model.user.imageUrl!,),
-                      backgroundColor: primary,
-                    ),
-                    const SizedBox(width: 12,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${model.user.lastName} ${model.user.lastName}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                            fontFamily: 'Roboto',
-                          ),
-                        ),
-                        const SizedBox(height: 5,),
-                        Text('A month ago',
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(0xff979797).withOpacity(0.84),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20,),
-                Text(model.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
-                    fontFamily: 'Roboto',
-                    color: primary,
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                Text(model.description,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 11,
-                    fontFamily: 'Roboto',
-                    color: Color(0xff8F8D8D),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Flexible(
-            child: Column(
-              children: [
-                Flexible(
-                  child: model.imageUrl != ''  ? Image.network('https://lavie.orangedigitalcenteregypt.com${model.imageUrl}',
-                    width: double.infinity  ,
-                    fit: BoxFit.cover,) : Image.network('https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623959191-medium-plant-dieffenbachia-white-pot_2048x.jpg'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-    Padding(
-      padding:  const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        children: [
-          const Icon(Icons.thumb_up_alt_outlined,
-            size: 20,
-            color: Color(0xff666565),
-          ),
-          const SizedBox(width: 5,),
-          Text('${model.ForumLikes.length} Likes',
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: Colors.black.withOpacity(.6),
-            ),
-          ),
-          const SizedBox(width: 40,),
-          Text(' ${model.ForumComments.length} replies',
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: Colors.black.withOpacity(.6),
-            ),
-          ),
-        ],
-      ),
-    ),
-  ],
+  ),
+  itemCount: myForumModel!.data.length,
 );
+
 }

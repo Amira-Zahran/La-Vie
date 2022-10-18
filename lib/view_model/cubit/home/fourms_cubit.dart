@@ -20,20 +20,24 @@ class ForumsCubit extends Cubit<CubitStates> {
 
   static ForumsCubit get(context) => BlocProvider.of(context);
 
-  ForumData? forumData;
+  bool isLoading = true;
 
 
   ForumModel? forumModel;
 
-  getForums(int index) async {
+  Future<void> getForums() async {
     emit(ForumsLoadingState());
-    await DioHelper.getData(
-      url: forumsEndPoint,
-      token: accessToken,
-    ).then((value) {
-      forumModel = ForumModel.fromJson(value.data);
-      print(forumModel!.data![index].userId);
-
+    await DioHelper.getData(url: forumsEndPoint, token: accessToken,).then((value) {
+      print(accessToken);
+      print('forums');
+      print(value.statusMessage);
+      if(value.statusCode == 200){
+        forumModel = ForumModel.fromJson(value.data);
+        isLoading = false;
+        emit(ForumsSuccessState(forumModel!));
+        print(value.data);
+        print(value.statusMessage);
+      }
       emit(ForumsSuccessState(forumModel!));
     }).catchError((error) {
       print(error.toString());
@@ -47,15 +51,19 @@ class ForumsCubit extends Cubit<CubitStates> {
 
   MyForumModel? myForumModel;
 
-  getMyForums(int index) async {
+  Future<void> getMyForums() async {
     emit(MyForumLoadingState());
-    await DioHelper.getData(
-      url: myForumsEndPoint,
-      token: accessToken,
-    ).then((value) {
-      myForumModel = MyForumModel.fromJson(value.data);
-      print(myForumModel!.data[index].userId);
-
+    await DioHelper.getData(url: myForumsEndPoint, token: accessToken,).then((value) {
+      print(accessToken);
+      print('Myforums');
+      print(value.statusMessage);
+      if(value.statusCode == 200){
+        myForumModel = MyForumModel.fromJson(value.data);
+        isLoading = false;
+        emit(MyForumSuccessState(myForumModel!));
+        print(value.data);
+        print(value.statusMessage);
+      }
       emit(MyForumSuccessState(myForumModel!));
     }).catchError((error){
       print(error);
@@ -71,7 +79,7 @@ class ForumsCubit extends Cubit<CubitStates> {
   TextEditingController descriptionController = TextEditingController();
 
   PostModel? postModel;
-  createPost({
+  Future<void> createPost({
     required String? title,
     required String? description,
     String? postImage,
@@ -103,7 +111,7 @@ class ForumsCubit extends Cubit<CubitStates> {
 
   ProfileModel? profileModel;
 
-  getUserData() async {
+  Future<void> getUserData() async {
     emit(ProfileLoadingState());
     await DioHelper.getData(
       url: myProfileEndPoint,

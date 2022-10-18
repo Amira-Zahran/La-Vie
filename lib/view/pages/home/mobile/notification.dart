@@ -1,166 +1,292 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavie_web/view/components/styles/colors.dart';
 
 
 import '../../../../model/forums/forums_model.dart';
+import '../../../../view_model/cubit/home/fourms_cubit.dart';
+import '../../../../view_model/cubit/states.dart';
 
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
   @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+
+
+  @override
   Widget build(BuildContext context) {
-    return /*BlocProvider(
-      create: (BuildContext context) { return ForumsCubit(); },
+    return BlocProvider(
+      create: (BuildContext context) { return ForumsCubit()..getForums(); },
       child: BlocConsumer<ForumsCubit, CubitStates>(
-        listener: (BuildContext context, state) {  },
-        builder: (BuildContext context, Object? state) {
-          ForumsCubit forums = ForumsCubit.get(context);
-          return*/ Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
+          listener: (BuildContext context, state) {  },
+          builder: (BuildContext context, Object? state) {
+            ForumsCubit forums = ForumsCubit.get(context);
+            return Scaffold(
               backgroundColor: Colors.white,
-              centerTitle: true,
-              elevation: 0.0,
-              title: const Text(
-                'Notification',
-                style: TextStyle(
-                  fontSize: 19.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                centerTitle: true,
+                elevation: 0.0,
+                title: const Text(
+                  'Notification',
+                  style: TextStyle(
+                    fontSize: 19.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-            body:/* forums.forumData!.forumComments == null || forums.forumData!.forumLikes == null
-                ? CircularProgressIndicator()
-                :*/ ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context , index) => index %2 == 0
-                  ? notificationItemWithoutComment(/*Publisher(), ForumLikes(), index*/)
-                  : notificationItemWithComment(/*ForumComments(), Publisher(), index*/),
-              separatorBuilder: (context , index) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                ),
-                child: Container(
-                  height: 1.0,
-                  width: double.infinity,
-                  color: lightBlack,
-                ),
-              ),
-              itemCount: 10,
-            ),
-          );
-        /*},
-      ),
-    );*/
-  }
-
-  Widget notificationItemWithoutComment (/*Publisher publisher, ForumLikes likes, index*/){
-   // ForumsCubit myNotification = ForumsCubit.get(context);
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        height: 40,
-        child: Row(
-          crossAxisAlignment : CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage('https://res.cloudinary.com/lms07/image/upload/v1645954589/avatar/6214b94ad832b0549b436264_avatar1645954588291.png'),
-              radius: 16.0,
-            ),
-            const SizedBox(
-              width: 16.0,
-            ),
-            Text('ahmed comment on your post',//publisher.firstName.toString() + publisher.lastName.toString() + /*comments.comment! == 1 ?*/ 'liked' /*: 'left ${comments.length}'*/ + /*likes.userId! == myNotification.myForumModel!.data[index].userId ? 'Your Post' :*/ 'Post' ,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
+              body: forums.forumModel?.data == null
+                  ? const Center(child: CircularProgressIndicator(color: primary,))
+                  : notificationLikeComment(forums.forumModel!),
+            );
+          },
       ),
     );
   }
 
-  Widget notificationItemWithComment (/*ForumComments comments, Publisher publisher, index*/){
-    //
-    // ForumsCubit myNotification = ForumsCubit.get(context);
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        height: 134,
-        child: Row(
-          crossAxisAlignment : CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage('https://res.cloudinary.com/lms07/image/upload/v1645954589/avatar/6214b94ad832b0549b436264_avatar1645954588291.png'),
-              radius: 16.0,
+  Widget notificationLikeComment (ForumModel? forumModel){
+    return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+            crossAxisSpacing: 1,
+            mainAxisSpacing: 1,
+            mainAxisExtent: 100
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+      padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16),
+      child: forumModel!.data![index].forumLikes!.length > 10
+          ? Column(
+        children: [
+          Row(
+              crossAxisAlignment : CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage('https://lavie.orangedigitalcenteregypt.com${forumModel.data![index].imageUrl.toString()}'),
+                  radius: 16.0,
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Column(
+                  children: [
+                    Text('${forumModel.data![index].publisher!.firstName} ${forumModel.data![index].publisher!.lastName} Liked ${forumModel.data![index].forumLikes!.length} Posts' ,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    Text(forumModel.data![index].forumComments![index].createdAt.toString(), style: const TextStyle(color: lightgrey, fontSize: 12),)
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(
-              width: 16.0,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+          const SizedBox(height: 10,),
+          const Divider(height: 1, thickness: 1, indent: 10, endIndent: 10,),
+        ],
+      )
+          : forumModel.data![index].forumComments!.length > 9
+          ? Column(
+        children: [
+          Row(
+            crossAxisAlignment : CrossAxisAlignment.start,
+            children: [
+
+              CircleAvatar(
+                backgroundImage: NetworkImage('https://lavie.orangedigitalcenteregypt.com${forumModel.data![index].imageUrl.toString()}'),
+                radius: 16.0,
+              ),
+              const SizedBox(
+                width: 16.0,
+              ),
+              Column(
                 children: [
-                  Text( 'HMED;lkdsddsddddddd',//publisher.firstName.toString() + publisher.lastName.toString() + /*comments.comment! == 1 ?*/ 'commented on' /*: 'left ${comments.length}'*/ + /*comments.userId! == myNotification.myForumModel!.data[index].userId ? 'Your Post' : */'Post' ,
+                  Text('${forumModel.data![index].publisher!.firstName} ${forumModel.data![index].publisher!.lastName} Liked ${forumModel.data![index].forumLikes!.length} Posts' ,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
+                  const SizedBox(height: 7,),
                   Container(
-                    height: 70.0,
-                    decoration: const BoxDecoration(
-                      border: Border(
-                          left: BorderSide(
-                            width: 4.0,
-                            color: lightBlack,
-                          )
+                      height: 28.0,
+                      decoration: const BoxDecoration(
+                        border: Border(
+                            left: BorderSide(
+                              width: 4.0,
+                              color: lightgrey,
+                            )
+                        ),
                       ),
+                      child: Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width/5),
+                          child: Text(forumModel.data![index].forumComments![index].comment.toString(), style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: lightBlack,
+                          ),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,))
+                  ),
+                  const SizedBox(height: 7,),
+                  Text(forumModel.data![index].forumComments![index].createdAt.toString(), style: const TextStyle(color: lightgrey, fontSize: 12),)
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          const Divider(height: 1, thickness: 1, indent: 10, endIndent: 10,),
+        ],
+      )
+          : Column(
+        children: [
+          Row(
+            crossAxisAlignment : CrossAxisAlignment.start,
+            children: const [
+
+              CircleAvatar(
+                backgroundImage: NetworkImage('https://res.cloudinary.com/lms07/image/upload/v1645954589/avatar/6214b94ad832b0549b436264_avatar1645954588291.png'),
+                radius: 16.0,
+              ),
+              SizedBox(
+                width: 16.0,
+              ),
+              Text('Joy Arnold left 6 comments on Your Post',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          const Text('Yesterday at 11:42 PM', style: TextStyle(color: lightgrey, fontSize: 12),),
+          const SizedBox(height: 10,),
+          const Divider(height: 1, thickness: 1, indent: 10, endIndent: 10,),
+        ],
+      )
+    );
+
+  });
+  }
+
+  notificationIWithComment (ForumModel? forumModel){
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment : CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage('https://lavie.orangedigitalcenteregypt.com${forumModel!.data![index].imageUrl.toString()}'),
+                      radius: 16.0,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text('comments.comment!dsl,kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
-                      style: const TextStyle(
+                    const SizedBox(
+                      width: 16.0,
+                    ),
+                    Column(
+                      children: [
+                        Text('${forumModel.data![index].publisher!.firstName} ${forumModel.data![index].publisher!.lastName} ${forumModel.data![index].forumComments!.length == 1 ? 'commented on Post' : 'left ${forumModel.data![index].forumComments!.length} comments on Post'} '/*${forumModel.data![index].forumId == myForumModel?.data[index].forumId ? 'Your Post' :*/ ,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
                       ),
+                        Container(
+                            height: 70.0,
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                  left: BorderSide(
+                                    width: 4.0,
+                                    color: lightgrey,
+                                  )
+                              ),
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Text(forumModel.data![index].forumComments![index].comment.toString(), style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: lightBlack,
+                                ),
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,))
+                        ),
+                        Text(forumModel.data![index].forumComments![index].createdAt.toString()),
+                      ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(
-                    'comments.createdAt.toString()',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+
+                  ],
+                ),
+        );
+    },  /*separatorBuilder: (BuildContext context, int index) {
+      return const Divider(thickness: 10, indent: 10, endIndent: 10, height: 3,color: lightgrey,);
+    }, */
     );
   }
 
+  notificationWithComment(ForumModel? forumModel){
+    GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+        mainAxisExtent: 150
+    ),
+    itemBuilder: (BuildContext context, int index) {
+    return ListTile(
+        trailing: CircleAvatar(
+          backgroundImage: NetworkImage('https://lavie.orangedigitalcenteregypt.com${forumModel!.data![index].imageUrl.toString()}'),
+          radius: 16.0,
+        ),
+      //leading: ,
+      title: Column(
+        children: [
+          /*Text('${forumModel.data![index].publisher!.firstName} ${forumModel.data![index].publisher!.lastName} ${forumModel.data![index].forumComments!.length == 1 ? 'commented on Post' : 'left ${forumModel.data![index].forumComments!.length} comments on Post'} '*//*${forumModel.data![index].forumId == myForumModel?.data[index].forumId ? 'Your Post' :*//* ,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),*/
+          Container(
+              height: 70.0,
+              decoration: const BoxDecoration(
+                border: Border(
+                    left: BorderSide(
+                      width: 4.0,
+                      color: lightgrey,
+                    )
+                ),
+              ),
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(forumModel.data![index].forumComments![index].comment.toString(), style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: lightBlack,
+                  ),
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,))
+          ),
+        ],
+      ),
+      subtitle: Text(forumModel.data![index].forumComments![index].createdAt.toString())
+
+    );
+        }
+    );
+  }
 }
