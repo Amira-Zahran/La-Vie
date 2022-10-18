@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavie_web/view/components/styles/colors.dart';
 import 'package:lavie_web/view_model/cubit/states.dart';
-
-import '../../../../../../view_model/cubit/home/fourms_cubit.dart';
+import '../../../../../../view_model/cubit/home/home_cubit.dart';
 import '../../../../../components/auth/auth_components.dart';
 import '../forums.dart';
 
@@ -38,8 +37,8 @@ class _AddForumsState extends State<AddForums> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) { return ForumsCubit(); },
-      child: BlocConsumer<ForumsCubit, CubitStates>(
+      create: (BuildContext context) { return HomeCubit(); },
+      child: BlocConsumer<HomeCubit, CubitStates>(
         listener: (context , state){
           if(state is AddForumSuccessState){
             navigateAndFinish(context, const Forums());
@@ -49,7 +48,7 @@ class _AddForumsState extends State<AddForums> {
           }
         },
         builder: (context , state){
-          ForumsCubit forums = ForumsCubit.get(context);
+          HomeCubit forums = HomeCubit.get(context);
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
