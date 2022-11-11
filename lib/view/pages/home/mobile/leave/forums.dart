@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavie_web/model/forums/forums_model.dart';
 import 'package:lavie_web/view/components/home_mobile/home_component.dart';
-import 'package:lavie_web/view/pages/home/mobile/leaf/add_forums/add_forums.dart';
 import 'package:lavie_web/view/pages/home/mobile/navigation_bottom_bar.dart';
 import 'package:lavie_web/view_model/cubit/home/home_cubit.dart';
 import 'package:lavie_web/view_model/cubit/states.dart';
@@ -10,6 +9,7 @@ import 'package:lavie_web/view_model/cubit/states.dart';
 import '../../../../../model/forums/my_forums_model.dart';
 import '../../../../components/auth/auth_components.dart';
 import '../../../../components/styles/colors.dart';
+import 'add_forums/add_forums.dart';
 
 class Forums extends StatefulWidget {
   const Forums({Key? key}) : super(key: key);
@@ -150,8 +150,8 @@ class _ForumsState extends State<Forums> {
                     ),
                     Expanded(
                       child: forums.forumModel?.data != null  ? activeButton == 0
-                          ? buildForumItem(forums.forumModel)
-                          : buildMyForumItem(forums.myForumModel!)
+                          ? buildForum(forums.forumModel)
+                          : buildMyForum(forums.myForumModel!)
                           : const Center(child: CircularProgressIndicator(color: primary,),),
                     ),
                   ],),
@@ -162,7 +162,7 @@ class _ForumsState extends State<Forums> {
     );
   }
 
-  Widget buildForumItem(ForumModel? forumModel) => ListView.separated(
+  Widget buildForum(ForumModel? forumModel) => ListView.separated(
     separatorBuilder: (context , index) => const SizedBox(height: 20,),
     scrollDirection: Axis.vertical,
     itemBuilder: (context , index) => Column(
@@ -283,7 +283,7 @@ class _ForumsState extends State<Forums> {
     itemCount: forumModel!.data!.length,
   );
 
-  Widget buildMyForumItem(MyForumModel? myForumModel) => ListView.separated(
+  Widget buildMyForum(MyForumModel? myForumModel) => ListView.separated(
     separatorBuilder: (context , index) => const SizedBox(height: 20,),
     scrollDirection: Axis.vertical,
     itemBuilder: (context , index) => Column(

@@ -55,7 +55,7 @@ class _NavigationBottomBarState extends State<NavigationBottomBar> {
                       key: navigationKey,
                       height: 60,
                       index: myCubit.currentIndex,
-                      color: Colors.white,
+                      //color: Colors.white,
                       backgroundColor: Colors.transparent,
                       buttonBackgroundColor: primary,
                       animationCurve: Curves.easeInOut,

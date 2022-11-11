@@ -23,8 +23,7 @@ class _ProfileState extends State<Profile> {
                   image: DecorationImage(
                     image: const AssetImage('assets/cover.png'),
                     fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.6), BlendMode.darken),),),
+                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),),),
                 child: ProfileWidget(
                   imagePath: 'assets/cover.png',
                   onClicked: () async {},
@@ -32,29 +31,23 @@ class _ProfileState extends State<Profile> {
               ),
 
               const SizedBox(height: 24),
-              buildName(),
+              const Text(
+                'Amira Zahran',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
               const SizedBox(height: 24),
               Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: [
                       const SizedBox(height: 20,),
                       Container(
                         padding: const EdgeInsets.all(10),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * .9,
+                        width: MediaQuery.of(context).size.width * .9,
                         height: 80,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -90,10 +83,7 @@ class _ProfileState extends State<Profile> {
                             fontWeight: FontWeight.bold, fontSize: 20),),
                       const SizedBox(height: 10,),
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * .9,
+                        width: MediaQuery.of(context).size.width * .9,
                         padding: const EdgeInsets.all(10),
                         height: 80,
                         child: ElevatedButton(
@@ -187,18 +177,4 @@ class _ProfileState extends State<Profile> {
                   )),
             ]));
   }
-
-  Widget buildName() =>
-      Column(
-        children: const [
-          Text(
-            'Amira Zahran',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          SizedBox(height: 4),
-          Text('amira.salah.zarann@gmail.com',
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
-      );
 }

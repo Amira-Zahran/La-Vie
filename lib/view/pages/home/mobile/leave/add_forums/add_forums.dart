@@ -37,7 +37,7 @@ class _AddForumsState extends State<AddForums> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) { return HomeCubit(); },
+      create: (BuildContext context) { return HomeCubit()..getImage(); },
       child: BlocConsumer<HomeCubit, CubitStates>(
         listener: (context , state){
           if(state is AddForumSuccessState){

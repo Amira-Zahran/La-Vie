@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lavie_web/view/components/home_mobile/home_component.dart';
 import 'package:lavie_web/view/components/styles/colors.dart';
 import 'package:lavie_web/view_model/cubit/home/home_cubit.dart';
 import 'package:lavie_web/view_model/cubit/states.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../model/home/cart_model.dart';
 import '../../../../../model/home/plant_model.dart';
 import '../../../../../model/home/products_model.dart';
 import '../../../../../model/home/seed_model.dart';
 import '../../../../../model/home/tool_model.dart';
+import '../../../../../view_model/database/local/SQLITE_DB/database.dart';
 import '../../../../components/auth/auth_components.dart';
 import 'cart.dart';
 import 'quiz/quiz_questions.dart';
 import 'search.dart';
 
 class HomeMobile extends StatefulWidget {
-  const HomeMobile({Key? key}) : super(key: key);
+  HomeMobile({Key? key}) : super(key: key);
+
 
   @override
   State<HomeMobile> createState() => _HomeMobileState();
@@ -34,6 +38,8 @@ class _HomeMobileState extends State<HomeMobile> {
   String day = DateFormat('EEEE').format(DateTime.now()); //get day name from date using intl (package)
 
   int quantity = 1;
+
+
 
 
 fetch(){
@@ -61,12 +67,15 @@ fetch(){
           backgroundColor: Colors.white,
           body: Column(
             children: [
-              InkWell(
+              GestureDetector(
                 onTap: (){
                   navigateAndFinish(context, const QuizQuestions());
+                  setState(() {
+                    activeButton = 10;
+                  });
                 },
                 child: Visibility( // show or hide widget
-                //visible: (dateFormat == 'Monday') ? true : false,
+                visible: activeButton == 10 ? (day == 'Tuesday') ? true : false :  false,
                 child: Container(
                   margin: EdgeInsets.only(top: 20, left: MediaQuery.of(context).size.width *.8),
                   width: 40,
@@ -135,6 +144,7 @@ fetch(){
                 child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+
                   SizedBox(
                     width: 90,
                     height: 35,
@@ -311,7 +321,9 @@ fetch(){
               height: 30,
               child: ElevatedButton(
                     onPressed: (){
-
+                      SQLHelper.addPlant(productModel!.data![index].name!, productModel.data![index].price!, quantity, 'https://lavie.orangedigitalcenteregypt.com${productModel.data![index].imageUrl!}');
+                      Fluttertoast.showToast(msg: 'Plant Added');
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Cart()));
                     },
                     style: TextButton.styleFrom(
                         backgroundColor: primary,
@@ -462,7 +474,9 @@ fetch(){
               height: 30,
               child: ElevatedButton(
                   onPressed: (){
-
+                    SQLHelper.addPlant(plantModel!.data![index].name!, plantModel.data![index].sunLight!, quantity, 'https://lavie.orangedigitalcenteregypt.com${plantModel.data![index].imageUrl!}');
+                    Fluttertoast.showToast(msg: 'Plant Added');
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Cart()));
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: primary,
@@ -615,7 +629,9 @@ fetch(){
               height: 30,
               child: ElevatedButton(
                   onPressed: (){
-
+                    SQLHelper.addPlant(seedModel!.data![index].name!, 55, quantity, 'https://lavie.orangedigitalcenteregypt.com${seedModel.data![index].imageUrl!}');
+                    Fluttertoast.showToast(msg: 'Plant Added');
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Cart()));
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: primary,
@@ -640,6 +656,7 @@ fetch(){
   }
 
   Widget buildGridTool(ToolModel? toolModel){
+
     return GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 5,
@@ -768,7 +785,9 @@ fetch(){
               height: 30,
               child: ElevatedButton(
                   onPressed: (){
-
+                    SQLHelper.addPlant(toolModel!.data![index].name!, 340, quantity, 'https://lavie.orangedigitalcenteregypt.com${toolModel.data![index].imageUrl!}');
+                    Fluttertoast.showToast(msg: 'Plant Added');
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Cart()));
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: primary,
@@ -791,7 +810,5 @@ fetch(){
 
         ]), itemCount: toolModel?.data?.length,);
   }
-
-
 
 }

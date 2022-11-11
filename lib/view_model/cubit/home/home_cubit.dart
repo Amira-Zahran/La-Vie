@@ -16,7 +16,7 @@ import '../../../model/home/seed_model.dart';
 import '../../../model/home/tool_model.dart';
 import '../../../view/pages/home/mobile/Qr_Code_Scanner.dart';
 import '../../../view/pages/home/mobile/home/home_mobile.dart';
-import '../../../view/pages/home/mobile/leaf/forums.dart';
+import '../../../view/pages/home/mobile/leave/forums.dart';
 import '../../../view/pages/home/mobile/notification.dart';
 import '../../../view/pages/home/mobile/profile.dart';
 import '../../database/local/shared_prefrences/string/access.dart';
@@ -35,12 +35,12 @@ class HomeCubit extends Cubit<CubitStates> {
 
   int currentIndex = 2;
 
-  final screens = const [
-    Forums(),
-    QRViewExample(),
+  final screens = [
+    const Forums(),
+    const QRViewExample(),
     HomeMobile(),
-    NotificationScreen(),
-    Profile()
+    const NotificationScreen(),
+    const Profile()
   ];
 
   bool isLoading = true;
