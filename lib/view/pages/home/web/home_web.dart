@@ -163,6 +163,7 @@ class _HomeWebState extends State<HomeWeb> {
                               key: aboutSectionKey,
                             ),
 
+
                             const CustomAbout(),
                             Container(
                               color: darkGreyColor,
