@@ -162,6 +162,7 @@ class _HomeWebState extends State<HomeWeb> {
                               height: 100,
                               key: aboutSectionKey,
                             ),
+
                             const CustomAbout(),
                             Container(
                               color: darkGreyColor,
