@@ -6,8 +6,6 @@ import 'package:lavie_web/view/components/styles/colors.dart';
 import 'package:lavie_web/view_model/cubit/home/home_cubit.dart';
 import 'package:lavie_web/view_model/cubit/states.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../../model/home/cart_model.dart';
 import '../../../../../model/home/plant_model.dart';
 import '../../../../../model/home/products_model.dart';
 import '../../../../../model/home/seed_model.dart';
@@ -34,7 +32,7 @@ class _HomeMobileState extends State<HomeMobile> {
 
   final _scrollbar = ScrollController();
 
-  //String dateFormat = DateFormat('dd-MM-yyyy hh:mm').format(DateTime.now());
+  String dateFormat = DateFormat('dd-MM-yyyy hh:mm').format(DateTime.now());
   String day = DateFormat('EEEE').format(DateTime.now()); //get day name from date using intl (package)
 
   int quantity = 1;
@@ -75,7 +73,7 @@ fetch(){
                   });
                 },
                 child: Visibility( // show or hide widget
-                visible: activeButton == 10 ? (day == 'Tuesday') ? true : false :  false,
+                visible: activeButton == 10 ? (day == 'Wednesday') ? false : true :  true,
                 child: Container(
                   margin: EdgeInsets.only(top: 20, left: MediaQuery.of(context).size.width *.8),
                   width: 40,
