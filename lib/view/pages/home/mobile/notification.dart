@@ -46,6 +46,7 @@ class NotificationScreen extends StatelessWidget {
 
   Widget notificationLikeComment (ForumModel? forumModel){
     return ListView.builder(
+      //itemCount: forumModel!.data!.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16),
